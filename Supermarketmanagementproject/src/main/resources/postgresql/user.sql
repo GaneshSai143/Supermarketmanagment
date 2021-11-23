@@ -7,11 +7,11 @@ CREATE TABLE IF NOT EXISTS public."user_info"
     password character varying(255) NOT NULL,
     first_name character varying(255) NOT NULL,
     last_name character varying(255) NOT NULL,
-    aadhar_number integer NOT NULL,
+    email character varying(100) NOT NULL,
     CONSTRAINT user_pkey PRIMARY KEY (id),
     CONSTRAINT user_name_unique_index UNIQUE (user_name)
 )
 
 INSERT INTO "user_info"(ID, USER_NAME, PASSWORD,first_name,last_name,aadhar_number)
   VALUES (1, 'superadmin@demo.com', /*admin*/'$2a$08$WhflkbQx9CwspjvWr2gGu.Mc9zGUshO5u70R.b2rCvjc91DS2ABbK', 
-		  'Super', 'Admin', 0000000000);
+		  'Super', 'Admin', 'superadmin@demo.com');
