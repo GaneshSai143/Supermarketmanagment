@@ -59,7 +59,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource);
+        clients.jdbc(dataSource)
+        .withClient("my-trusted-client")
+        .authorizedGrantTypes("client_credentials", "password")
+        .authorities("ROLE_SUPER_ADMIN","ROLE_outlet","ROLE_customer")
+        .scopes("read","write","trust")
+        .resourceIds("oauth2-resource")
+        .accessTokenValiditySeconds(5000)
+        .secret(oauthClientPasswordEncoder.encode("admin"));;
     }
 
     @Override

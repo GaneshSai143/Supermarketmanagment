@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS public."user_info"
     CONSTRAINT user_name_unique_index UNIQUE (user_name)
 )
 
-INSERT INTO "user_info"(ID, USER_NAME, PASSWORD,first_name,last_name,aadhar_number)
+INSERT INTO "user_info"(ID, USER_NAME, PASSWORD,first_name,last_name,email)
   VALUES (1, 'superadmin@demo.com', /*admin*/'$2a$08$WhflkbQx9CwspjvWr2gGu.Mc9zGUshO5u70R.b2rCvjc91DS2ABbK', 
 		  'Super', 'Admin', 'superadmin@demo.com');

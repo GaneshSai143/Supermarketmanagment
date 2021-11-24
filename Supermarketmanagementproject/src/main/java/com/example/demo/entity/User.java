@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -67,8 +68,14 @@ public class User implements UserDetails, Serializable {
 		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
 	@OrderBy
 	@JsonIgnore
-	private Collection<Authority> authorities;
+	private Collection<Authority> authorities ;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	 @JoinColumn(name = "user_id", referencedColumnName = "id")
+		
+	@OrderBy
+	@JsonIgnore
+	private Outlet outlets;
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -89,6 +96,7 @@ public class User implements UserDetails, Serializable {
 	public boolean isEnabled() {
 		return true;
 	}
+
 
 
 
