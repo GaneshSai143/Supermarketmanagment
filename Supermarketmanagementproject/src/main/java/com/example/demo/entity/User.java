@@ -57,9 +57,15 @@ public class User implements UserDetails, Serializable {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Column(name="email")
+	@Column(name="email",unique = true)
 	private String emailid;
 	
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	 @JoinColumn(name = "user_outlet_id", referencedColumnName = "id")	
+	@OrderBy
+	@JsonIgnore
+	private Collection<Outlet> outlets;
 	
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -70,12 +76,7 @@ public class User implements UserDetails, Serializable {
 	@JsonIgnore
 	private Collection<Authority> authorities ;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	 @JoinColumn(name = "user_id", referencedColumnName = "id")
-		
-	@OrderBy
-	@JsonIgnore
-	private Outlet outlets;
+	
 
 	@Override
 	public boolean isAccountNonExpired() {

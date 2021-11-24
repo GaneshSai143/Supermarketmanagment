@@ -62,11 +62,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         clients.jdbc(dataSource)
         .withClient("my-trusted-client")
         .authorizedGrantTypes("client_credentials", "password")
-        .authorities("ROLE_SUPER_ADMIN","ROLE_outlet","ROLE_customer")
+        .authorities("ROLE_SUPER_ADMIN","ROLE_OUTLET_ADMIN","ROLE_CUSTOMER")
         .scopes("read","write","trust")
         .resourceIds("oauth2-resource")
-        .accessTokenValiditySeconds(5000)
-        .secret(oauthClientPasswordEncoder.encode("admin"));;
+        .accessTokenValiditySeconds(10800)
+        .secret(oauthClientPasswordEncoder.encode("admin"));
     }
 
     @Override
