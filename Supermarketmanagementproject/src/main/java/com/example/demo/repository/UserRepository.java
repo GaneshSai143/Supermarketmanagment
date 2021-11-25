@@ -18,16 +18,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	            "WHERE user.username = :username")
 	    public User findByUsername(@Param("username") String username);
 
-	 //public User findByUserNameAndEnabled(String userName, short enabled);
-
-	//	public List<User> findAllByEnabled(short enabled);
-
-		public User findById(int id);
-	//
-//		@Override
-//		public UserInfo save(UserInfo userInfo);
-
-		public void deleteById(int id);
+	 @Query("delete from User where id=:id")
+		public void delete(@Param("id")int id);
+		
 
 	
 }

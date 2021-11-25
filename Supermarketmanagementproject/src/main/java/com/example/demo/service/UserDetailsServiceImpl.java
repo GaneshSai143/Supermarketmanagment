@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 //import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		throw new UsernameNotFoundException(username);
 			
 		}
+	@Transactional(readOnly = true)
+	 public List<User> getAll() {
+		 return userRepository.findAll();
+	 }
+	
+	@Transactional
+	public void create(User user) {
+
+		userRepository.save(user);
+	}
+	
+	@Transactional
+	public User update(User user) {
+		return userRepository.save(user);
+	}
+	
+	@Transactional
+	public void delete(int id) {
+	 userRepository.delete(id);
+	}
+	@Transactional
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
 	}
 
 

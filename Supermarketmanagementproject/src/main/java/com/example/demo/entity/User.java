@@ -67,6 +67,18 @@ public class User implements UserDetails, Serializable {
 	@JsonIgnore
 	private Collection<Outlet> outlets;
 	
+	@OneToMany(fetch = FetchType.LAZY)
+	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
+	@OrderBy
+	@JsonIgnore
+	private Collection<Products> products;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
+	@OrderBy
+	@JsonIgnore
+	private Collection<Orders> orders;
+	
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_authority", 
