@@ -7,7 +7,7 @@ import com.example.demo.entity.User;
 public interface Userservice {
 	
 	public List<User> getAll();
-public void create(User user);
+public User create(User user);
 	
 	public User update(User user);
 	

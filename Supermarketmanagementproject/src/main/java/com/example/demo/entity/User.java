@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
