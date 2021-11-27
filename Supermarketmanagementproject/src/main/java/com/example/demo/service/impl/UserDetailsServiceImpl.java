@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 //import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 import com.example.demo.entity.*;
+import com.example.demo.mail.Usercreatedevent;
 import com.example.demo.repository.Role;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.Userservice;
@@ -27,6 +31,9 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	  private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private  ApplicationEventPublisher publisher;
 	
 	@Autowired
 	private Role rrepo;
@@ -52,7 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	 }
 	@Override
 	@Transactional
-	public User create(User user) {
+	public void create(User user) {
 	        User userWithDuplicateUsername = userRepository.findByUsername(user.getUsername());
 	        if(userWithDuplicateUsername != null && user.getId() != userWithDuplicateUsername.getId()) {
 	            log.error(String.format("Duplicate username %", user.getUsername()));
@@ -64,8 +71,9 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	        user1.setLastName(user.getLastName());
 	        user1.setUsername(user.getUsername());
 	        user.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
-	return   userRepository.save(user);
-		
+	       
+	  userRepository.save(user);
+	  publisher.publishEvent(new Usercreatedevent(user));
 	}
 	
 	
@@ -77,19 +85,9 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	@Override
 	@Transactional
 	public void delete(int id) {
-	 userRepository.delete(id);
-	}
-	@Override
-	@Transactional
-	public void delete(User user) {
-		userRepository.delete(user);
+	 userRepository.deleteById(id);
 	}
 	
-	/*private Set<GrantedAuthority> getAuthorities(User user) {
-        Set<Authority> roleByUserId = user.getAuthorities();
-        final Set<GrantedAuthority> authorities = roleByUserId.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toString().toUpperCase())).collect(Collectors.toSet());
-        return authorities;
-    }*/
 	}
 
 

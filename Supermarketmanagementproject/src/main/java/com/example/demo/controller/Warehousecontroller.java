@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.example.demo.entity.User;
-import com.example.demo.service.Authenticationservice;
+
 import com.example.demo.service.impl.UserDetailsServiceImpl;
 
 
@@ -36,12 +38,13 @@ public class Warehousecontroller {
 	private UserDetailsServiceImpl detailsServiceImpl; 
 	
 	@Autowired
-	private Authenticationservice authenticationservice;
+	
+	 private  ApplicationEventPublisher publisher;
 		
 	public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
     public static final String ROLE_OUTLET_ADMIN = "ROLE_OUTLET_ADMIN";
     public static final String ROLE_CUSTOMER = "ROLE_CUSTOMER";
-
+    
 
 		@GetMapping(value="/user")
 	    public List<User> getAll() {
@@ -53,7 +56,14 @@ public class Warehousecontroller {
 	    public ResponseEntity<?> create(@RequestBody User user) {
 	        detailsServiceImpl.create(user);
 	        HttpHeaders headers = new HttpHeaders();
-	        return new ResponseEntity<>(headers, HttpStatus.FOUND);}
+	        
+	        return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();
+	           
+		}
+		
+		
+		
+		
 		@PutMapping("/edit/{id}")
 		private User update(@RequestBody User users,@PathVariable int id) {
 			users.setId(id);
@@ -61,6 +71,8 @@ public class Warehousecontroller {
 				return users;
 			}
 			
+		
+		
 			@DeleteMapping("delete/{id}")
 			private void deleteusers(@PathVariable ("id") int id) {
 				detailsServiceImpl.delete(id);
