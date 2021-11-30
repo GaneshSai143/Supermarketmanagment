@@ -53,11 +53,11 @@ public class Warehousecontroller {
 		
 		@RequestMapping(value="/user",method = RequestMethod.POST, produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseStatus(value = HttpStatus.OK)
-	    public ResponseEntity<?> create(@RequestBody User user) {
+	    public ResponseEntity<?> create(@RequestBody User user) throws Exception {
 	        detailsServiceImpl.create(user);
 	        HttpHeaders headers = new HttpHeaders();
 	        
-	        return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();
+	        return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	           
 		}
 		

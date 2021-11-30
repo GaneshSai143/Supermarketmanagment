@@ -6,14 +6,11 @@ import java.util.stream.Collectors;
 //import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
@@ -21,10 +18,14 @@ import org.slf4j.LoggerFactory;
 
 
 import com.example.demo.entity.*;
-import com.example.demo.mail.Usercreatedevent;
+import com.example.demo.mail.Email;
+import com.example.demo.mail.Emailserviceimpl;
+
 import com.example.demo.repository.Role;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.Userservice;
+
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 
@@ -32,12 +33,16 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	@Autowired
 	private UserRepository userRepository;
 	
+	
+	
 	@Autowired
-	private  ApplicationEventPublisher publisher;
+	private Emailserviceimpl emailservice;
 	
 	@Autowired
 	private Role rrepo;
 	
+	@Autowired
+	private PasswordGenerator passwordGenerator;
 	
 
 	@Override
@@ -59,7 +64,7 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	 }
 	@Override
 	@Transactional
-	public void create(User user) {
+	public void create(User user) throws Exception{
 	        User userWithDuplicateUsername = userRepository.findByUsername(user.getUsername());
 	        if(userWithDuplicateUsername != null && user.getId() != userWithDuplicateUsername.getId()) {
 	            log.error(String.format("Duplicate username %", user.getUsername()));
@@ -70,11 +75,23 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	        user1.setFirstName(user.getFirstName());
 	        user1.setLastName(user.getLastName());
 	        user1.setUsername(user.getUsername());
-	        user.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
-	       
+	        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+	        String pass=passwordGenerator.generateRandomPassword(8);
+	        String encodedPassword = passwordEncoder.encode(pass);
+	        System.out.println(pass);
+	        user.setPassword(encodedPassword);
+	 
 	  userRepository.save(user);
-	  publisher.publishEvent(new Usercreatedevent(user));
+	  
+	  Email mail = new Email();
+	  mail.setSubject("Welcome to Super market Management System Program");
+	  mail.setToEmail(user.getEmailid());
+	  mail.setContent("You were added by " +"Username :"+user.getUsername() +"\n"+ "password :"+pass);
+	  emailservice.sendEmail(mail);
+	 
 	}
+	
+	
 	
 	
 	@Override

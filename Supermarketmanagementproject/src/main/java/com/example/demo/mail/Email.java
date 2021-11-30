@@ -1,14 +1,16 @@
 package com.example.demo.mail;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Map;
 
-@Builder
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Email {
  private   String toEmail;
  private   String subject;
