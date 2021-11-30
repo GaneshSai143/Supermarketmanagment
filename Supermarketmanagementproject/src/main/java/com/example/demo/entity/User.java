@@ -17,6 +17,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -46,6 +49,8 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "id")
 	private Integer id;
 	
+	@NotEmpty
+	@Size(min = 2, message = "user name should have at least 2 characters")
 	@Column(name="user_name")
 	private String username;
 	
@@ -58,6 +63,8 @@ public class User implements UserDetails, Serializable {
 	@Column(name="last_name")
 	private String lastName;
 	
+	@Pattern(regexp ="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$",message="mail id is not valid")
+	@NotEmpty
 	@Column(name="email",unique = true)
 	private String emailid;
 	
