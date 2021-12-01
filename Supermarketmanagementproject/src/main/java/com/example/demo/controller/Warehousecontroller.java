@@ -7,7 +7,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +37,7 @@ public class Warehousecontroller {
 	@Autowired
 	private UserDetailsServiceImpl detailsServiceImpl; 
 	
-	@Autowired
 	
-	 private  ApplicationEventPublisher publisher;
 		
 	public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
     public static final String ROLE_OUTLET_ADMIN = "ROLE_OUTLET_ADMIN";
