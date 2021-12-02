@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Authority;
 
 @Repository
-public interface Role extends JpaRepository<Authority, Integer> {
-	@Query(value = "SELECT * FROM Authority where name IN (:authorities)", nativeQuery = true)
-	Set<Authority> find(@Param("authorities") Set<Authority> authorities);
+public interface Role extends JpaRepository<Authority, Long> {
+	@Query(value = "SELECT * FROM Authority u where u.name IN (:authorities)", nativeQuery = true)
+    List<Authority> find(@Param("authorities") List<String> authorities);
 }

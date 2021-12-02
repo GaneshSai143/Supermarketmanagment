@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.Optional;
+
 //import java.util.List;
 //import java.util.Optional;
 
@@ -21,8 +23,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	// @Query("delete from User where id=:id")
 		public void deleteById(@Param("id")int id);
 
-	
 		
+	
+		//User findByEmailId(String emialId);
 
 	
 }

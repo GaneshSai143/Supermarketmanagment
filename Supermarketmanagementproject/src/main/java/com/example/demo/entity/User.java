@@ -73,13 +73,13 @@ public class User implements UserDetails, Serializable {
 	 @JoinColumn(name = "user_outlet_id", referencedColumnName = "id")	
 	@OrderBy
 	@JsonIgnore
-	private Collection<Outlet> outlets;
+	private List<Outlet> outlets;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
 	@OrderBy
 	@JsonIgnore
-	private Collection<Products> products;
+	private List<Products> products;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
@@ -88,13 +88,13 @@ public class User implements UserDetails, Serializable {
 	private Collection<Orders> orders;
 	
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_authority", 
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
 	@OrderBy
 	@JsonIgnore
-	private Collection<Authority> authorities ;
+	private List<Authority> authorities ;
 
 	
 

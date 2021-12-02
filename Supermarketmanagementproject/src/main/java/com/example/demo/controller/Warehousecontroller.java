@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.demo.entity.User;
-
+import com.example.demo.entity.dto.Userdto;
 import com.example.demo.service.impl.UserDetailsServiceImpl;
 
 
@@ -38,20 +38,20 @@ public class Warehousecontroller {
 	private UserDetailsServiceImpl detailsServiceImpl; 
 	
 	
-		
-	public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
-    public static final String ROLE_OUTLET_ADMIN = "ROLE_OUTLET_ADMIN";
-    public static final String ROLE_CUSTOMER = "ROLE_CUSTOMER";
-    
 
 		@GetMapping(value="/user")
 	    public List<User> getAll() {
 	        return detailsServiceImpl.getAll();
 	    }
 		
+		@GetMapping(value="/{id}")
+		public ResponseEntity<User> getUserById(@PathVariable int id) {
+			return ResponseEntity.ok().body(detailsServiceImpl.getUserById(id));
+		}
+		
 		@RequestMapping(value="/user",method = RequestMethod.POST, produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseStatus(value = HttpStatus.OK)
-	    public ResponseEntity<?> create(@Valid @RequestBody User user) throws Exception {
+	    public ResponseEntity<User> create(@Valid @RequestBody Userdto user) throws Exception {
 	        detailsServiceImpl.create(user);
 	        HttpHeaders headers = new HttpHeaders();
 	        
@@ -63,16 +63,16 @@ public class Warehousecontroller {
 		
 		
 		@PutMapping("/edit/{id}")
-		private User update(@RequestBody User users,@PathVariable int id) {
+		public ResponseEntity<User> update(@RequestBody Userdto users,@PathVariable int id) {
 			users.setId(id);
-			detailsServiceImpl.update(users);
-				return users;
+			
+			return ResponseEntity.ok().body(detailsServiceImpl.update(users));
 			}
 			
 		
 		
-			@DeleteMapping("delete/{id}")
-			private void deleteusers(@PathVariable ("id") int id) {
+			@DeleteMapping("/delete/{id}")
+			public void deleteusers(@PathVariable ("id") int id) {
 				detailsServiceImpl.delete(id);
 			}
 		

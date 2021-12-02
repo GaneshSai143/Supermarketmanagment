@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 
 import com.example.demo.entity.*;
+import com.example.demo.entity.dto.Userdto;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mail.Email;
 import com.example.demo.mail.Emailserviceimpl;
 
@@ -64,14 +66,14 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	 }
 	@Override
 	@Transactional
-	public void create(User user) throws Exception{
+	public User create(Userdto user) throws Exception{
 	        User userWithDuplicateUsername = userRepository.findByUsername(user.getUsername());
 	        if(userWithDuplicateUsername != null && user.getId() != userWithDuplicateUsername.getId()) {
 	            log.error(String.format("Duplicate username %", user.getUsername()));
 	            throw new RuntimeException("Duplicate username.");
 	        }
 	        User user1 = new User();
-	        user1.setEmailid(user.getEmailid());
+	        user1.setEmailid(user.getEmailId());
 	        user1.setFirstName(user.getFirstName());
 	        user1.setLastName(user.getLastName());
 	        user1.setUsername(user.getUsername());
@@ -79,16 +81,19 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	        String pass=passwordGenerator.generateRandomPassword(8);
 	        String encodedPassword = passwordEncoder.encode(pass);
 	        System.out.println(pass);
-	        user.setPassword(encodedPassword);
-	 
-	  userRepository.save(user);
-	  
+	        user1.setPassword(encodedPassword);
+	        
+	        List<Authority> addAuthorities=rrepo.find(user.getRoletype());
+            user1.setAuthorities(addAuthorities);
+            
+            
 	  Email mail = new Email();
 	  mail.setSubject("Welcome to Super market Management System Program");
-	  mail.setToEmail(user.getEmailid());
+	  mail.setToEmail(user1.getEmailid());
 	  mail.setContent("You were added by " +"Username :"+user.getUsername() +"\n"+ "password :"+pass);
 	  emailservice.sendEmail(mail);
-	 
+	  return userRepository.save(user1);
+	  
 	}
 	
 	
@@ -96,15 +101,54 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	
 	@Override
 	@Transactional
-	public User update(User user) {
-		return userRepository.save(user);
+	public User update(Userdto user) {
+		
+Optional<User> userdb=this.userRepository.findById(user.getId());
+		
+		if(userdb.isPresent()) {
+			User userUpdate=userdb.get();
+			userUpdate.setId(user.getId());
+			userUpdate.setUsername(user.getUsername());
+			userUpdate.setFirstName(user.getFirstName());
+			userUpdate.setLastName(user.getLastName());
+			userUpdate.setEmailid(user.getEmailId());
+		    userUpdate.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
+		    userRepository.save(userUpdate);
+		    return userUpdate;
+		}
+		else {
+			throw new ResourceNotFoundException("Record not found with id" + user.getId());
+		}
+		
 	}
 	@Override
 	@Transactional
 	public void delete(int id) {
-	 userRepository.deleteById(id);
-	}
+Optional<User> userdb=this.userRepository.findById(id);
+		
+		if(userdb.isPresent()) {
+			
+			this.userRepository.deleteById(id);
+		}
+		else {
+			throw new ResourceNotFoundException("Record not found with id  :" +id);
+		}
 	
 	}
+	
+	@Override
+	@Transactional
+	public User getUserById(int id) {
+		Optional<User> userdb=this.userRepository.findById(id);
+		if(userdb.isPresent()) {
+			return userdb.get();
+		}
+		
+		else {
+			throw  new ResourceNotFoundException("Record not found with id  :" +id);
+		}
+		
+	}
+}
 
 
