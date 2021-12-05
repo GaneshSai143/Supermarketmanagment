@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 //import java.util.Arrays;
 
@@ -18,11 +17,14 @@ import org.slf4j.LoggerFactory;
 
 
 import com.example.demo.entity.*;
+import com.example.demo.entity.dto.Outletdto;
+import com.example.demo.entity.dto.Productdto;
 import com.example.demo.entity.dto.Userdto;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mail.Email;
 import com.example.demo.mail.Emailserviceimpl;
-
+import com.example.demo.repository.Outletrepository;
+import com.example.demo.repository.Productrepository;
 import com.example.demo.repository.Role;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.Userservice;
@@ -45,6 +47,12 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	
 	@Autowired
 	private PasswordGenerator passwordGenerator;
+	
+	@Autowired
+	private Outletrepository orepo;
+	
+	@Autowired
+	private Productrepository prepo;
 	
 
 	@Override
@@ -83,16 +91,52 @@ public class UserDetailsServiceImpl implements UserDetailsService ,Userservice{
 	        System.out.println(pass);
 	        user1.setPassword(encodedPassword);
 	        
+	        
+	        User u2=null;
+	        Outletdto o1=new Outletdto();
+	        Outlet o= new Outlet();
+	        o.setOutletname(o1.getOutletname());
+	        List<Outlet> l= new ArrayList<Outlet>();
+	        l.add(o);
+	        user1.setOutlets(l);
+	        
+	        Productdto pdt=new Productdto();
+	        Products p=new Products();
+	        p.setPname(pdt.getPname());
+	        p.setQuantity(pdt.getQuantity());
+	        p.setPrice(pdt.getPrice());
+	        List<Products> pp=new ArrayList<Products>();
+	        pp.add(p);
+	        user1.setProducts(pp);
+	        
+	        List<Authority> allList=rrepo.findAll();
+	        String RoleSuper=allList.get(0).getName();
+	        List<String> SuperAdminList=new ArrayList<String>();
+	        SuperAdminList.add(RoleSuper);
+	        
 	        List<Authority> addAuthorities=rrepo.find(user.getRoletype());
+	       
+	        if(SuperAdminList.equals(user.getRoletype()))
+	        {
+	        	throw new ResourceNotFoundException("this role was not added ");
+	        }
+	        else
+	        {
             user1.setAuthorities(addAuthorities);
-            
-            
+           // user1.setOutlets(user.getOutlets());
+            u2= userRepository.save(user1);
+	        }
+	        
+	        	
+	        	
+	      
+	        
 	  Email mail = new Email();
 	  mail.setSubject("Welcome to Super market Management System Program");
 	  mail.setToEmail(user1.getEmailid());
 	  mail.setContent("You were added by " +"Username :"+user.getUsername() +"\n"+ "password :"+pass);
 	  emailservice.sendEmail(mail);
-	  return userRepository.save(user1);
+	  return u2;
 	  
 	}
 	

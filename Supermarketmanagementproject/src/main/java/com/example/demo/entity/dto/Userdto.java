@@ -2,7 +2,11 @@ package com.example.demo.entity.dto;
 
 
 
-import java.util.List;
+
+import java.util.*;
+
+import com.example.demo.entity.Outlet;
+import com.example.demo.entity.Products;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +28,7 @@ public class Userdto {
     private String password;
     private String emailId;
     private List<String> roletype;
+    private List<Outlet> outlets;
+    private List<Products> products;
+    
 }

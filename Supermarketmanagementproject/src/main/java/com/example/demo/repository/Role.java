@@ -11,6 +11,6 @@ import com.example.demo.entity.Authority;
 
 @Repository
 public interface Role extends JpaRepository<Authority, Long> {
-	@Query(value = "SELECT * FROM Authority u where u.name IN (:authorities)", nativeQuery = true)
+	@Query(value = "SELECT * FROM Authority u where u.name IN (:authorities) ", nativeQuery = true)
     List<Authority> find(@Param("authorities") List<String> authorities);
 }

@@ -5,11 +5,14 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +31,9 @@ import lombok.Setter;
 public class Products {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
+	@SequenceGenerator(name = "product_sequence", sequenceName = "user_sequence", allocationSize = 1)
+	
  private int id;
  @Column(name="product_name")
  private String pname;

@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.dto.Outletdto;
+import com.example.demo.entity.dto.Productdto;
 import com.example.demo.entity.dto.Userdto;
 
 public interface Userservice {

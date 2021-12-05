@@ -4,12 +4,14 @@ import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
 import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +27,9 @@ import lombok.Setter;
 public class Outlet {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "outlet_sequence")
+	@SequenceGenerator(name = "outlet_sequence", sequenceName = "user_sequence", allocationSize = 1)
+	
 	private int id;
 	
 	private String outletname;

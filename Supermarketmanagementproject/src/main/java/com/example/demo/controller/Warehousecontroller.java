@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.dto.Outletdto;
+import com.example.demo.entity.dto.Productdto;
 import com.example.demo.entity.dto.Userdto;
 import com.example.demo.service.impl.UserDetailsServiceImpl;
 
