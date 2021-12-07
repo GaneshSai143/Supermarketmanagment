@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -32,7 +33,7 @@ public class Products {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
-	@SequenceGenerator(name = "product_sequence", sequenceName = "user_sequence", allocationSize = 1)
+	@SequenceGenerator(name = "product_sequence", sequenceName = "product_sequence", allocationSize = 1)
 	
  private int id;
  @Column(name="product_name")
@@ -40,11 +41,17 @@ public class Products {
  private long quantity;
  private long price;
  
- @ManyToMany(fetch = FetchType.LAZY)
+ /*@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "order_products", 
 		joinColumns = @JoinColumn(name = "user_product_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
 	@OrderBy
 	@JsonIgnore
-	private Collection<Orders> orders ;
+	private Collection<Orders> orders ;*/
+ 
+ 
+ @ManyToOne(fetch = FetchType.LAZY)
+ @JoinColumn
+ @JsonIgnore
+ private User user;
 }

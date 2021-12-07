@@ -70,13 +70,13 @@ public class User implements UserDetails, Serializable {
 	private String emailid;
 	
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	 @JoinColumn(name = "user_outlet_id", referencedColumnName = "id")	
+	/*@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_outlet_id", referencedColumnName = "id")	
 	@OrderBy
 	@JsonIgnore
 	private List<Outlet> outlets;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	/*@OneToMany(fetch = FetchType.LAZY)
 	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
 	@OrderBy
 	@JsonIgnore
@@ -88,7 +88,7 @@ public class User implements UserDetails, Serializable {
 	@JsonIgnore
 	private Collection<Orders> orders;
 	
-
+*/
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_authority", 
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 

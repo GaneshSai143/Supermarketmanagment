@@ -23,21 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.demo.entity.User;
-import com.example.demo.entity.dto.Outletdto;
-import com.example.demo.entity.dto.Productdto;
+
 import com.example.demo.entity.dto.Userdto;
-import com.example.demo.service.impl.UserDetailsServiceImpl;
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.demo.service.impl.Customerserviceimpl;
 
 @RestController
 public class Warehousecontroller {
 	
-	private static final Logger log = LoggerFactory.getLogger(Warehousecontroller.class);
 	@Autowired
-	private UserDetailsServiceImpl detailsServiceImpl; 
+	private Customerserviceimpl detailsServiceImpl;
 	
 	
 

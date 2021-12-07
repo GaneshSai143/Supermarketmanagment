@@ -1,5 +1,7 @@
 package com.example.demo.entity.dto;
 
+import java.util.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,9 @@ public class Outletdto {
 	
 	
 
+	private int id;
 	private String outletname;
-	 private String [] users;
+	private Userdto userdto;
+	 private List<String> products;
 	 
 }

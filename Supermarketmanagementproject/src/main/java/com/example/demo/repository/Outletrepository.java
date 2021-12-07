@@ -12,6 +12,5 @@ import com.example.demo.entity.Outlet;
 @Repository
 public interface Outletrepository extends JpaRepository<Outlet, Integer> {
 
-	@Query(value="select * from Outlet o where o.outletname IN(:outlets)", nativeQuery = true)
-	public List<Outlet> findByOutletName(@Param("outlets") List<String> outletname);
+	
 }
