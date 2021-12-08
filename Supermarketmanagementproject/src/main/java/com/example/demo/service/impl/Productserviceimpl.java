@@ -68,7 +68,8 @@ public class Productserviceimpl implements Productservice {
 
 		Optional<Products> pdelete=this.prepo.findById(id);
 		if(pdelete.isPresent()) {
-			this.prepo.getById(id);
+			this.prepo.deleteById(id);
+			
 		}
 		
 		else {
