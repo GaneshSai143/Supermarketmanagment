@@ -50,9 +50,12 @@ public class Orderserviceimpl implements Orderservice {
 		o1.setOrder_canceled(orders.getOrder_canceled());
 		o1.setCustomerdeliveryaddress(orders.getCustomerdeliveryaddress());
 		o1.setOrderstatus(orders.getOrderstatus());
+		o1.setQuantity(orders.getQuantity());
 		
 		List<Products> products= prepo.find(orders.getProductname());
+		
     	o1.setProducts(products);
+    	
     	
     	List<Outlet> outlets= orepo.find(orders.getOutletname());
     

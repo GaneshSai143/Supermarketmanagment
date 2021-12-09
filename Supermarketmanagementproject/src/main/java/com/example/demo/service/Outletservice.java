@@ -15,6 +15,7 @@ public interface Outletservice {
 		
 		public Outlet update(Outletdto user);
 		
+		//public int prodductquantity(Outletdto p)throws Exception;
 		 public void delete(int id);
 		 Outlet getOutletById(int id);
 }

@@ -24,6 +24,7 @@ public class Orderdto {
 	private String customerdeliveryaddress;
 	private String orderstatus;
 	private List<String> productname;
+	private int quantity;
 	private List<String> outletname;
 	private String username;
 

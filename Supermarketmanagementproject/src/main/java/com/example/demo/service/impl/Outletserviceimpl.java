@@ -117,6 +117,8 @@ public class Outletserviceimpl implements Outletservice{
 
 		return orepo.save(shops);
 	}
+	
+	
 
 	@Override
 	@Transactional
@@ -164,5 +166,12 @@ Optional<Outlet> shops=this.orepo.findById(id);
 		}
 		
 	}
+
+	/*@Override
+	@Transactional
+	public int prodductquantity(Outletdto products) throws Exception {
+		
+		return 0;
+	}*/
 
 }

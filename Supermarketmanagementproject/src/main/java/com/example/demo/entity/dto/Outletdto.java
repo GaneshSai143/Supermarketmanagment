@@ -20,4 +20,5 @@ public class Outletdto {
 	private Userdto userdto;
 	 private List<String> products;
 	 
+	 
 }

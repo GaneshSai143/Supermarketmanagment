@@ -42,6 +42,7 @@ public class Orders {
 	@Column(name="address")
 	private String customerdeliveryaddress;
 	private String orderstatus;
+	private int quantity;
 	
 	
 	@ManyToMany(fetch = FetchType.LAZY)

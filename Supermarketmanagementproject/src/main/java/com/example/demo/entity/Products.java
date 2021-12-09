@@ -38,7 +38,7 @@ public class Products {
  private int id;
  @Column(name="product_name")
  private String pname;
- private long quantity;
+ private int quantity;
  private long price;
  
  /*@ManyToMany(fetch = FetchType.LAZY)

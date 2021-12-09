@@ -42,6 +42,13 @@ public class Productserviceimpl implements Productservice {
 		p.setUser(u);
 		return prepo.save(p);
 	}
+	
+	/*int quantity=p.setQuantity(user.getQuantity());
+	public int getQuantity()
+    {
+   	 quantity =this.quantity-this.orderquantity;
+   	 return quantity;
+    }*/
 
 	@Override
 	@Transactional
