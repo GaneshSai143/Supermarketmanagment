@@ -14,6 +14,6 @@ import com.example.demo.entity.Products;
 public interface Orderrepository extends JpaRepository<Orders, Integer> {
 
 	@Query(value = "SELECT * FROM ORDERS o where o.quantity IN (:orderquantity) ", nativeQuery = true)
-    List<Orders> findQuantity(@Param("orderquantity") Integer orderquantity);
+   Orders findQuantity(@Param("orderquantity") Integer orderquantity);
 	
 }

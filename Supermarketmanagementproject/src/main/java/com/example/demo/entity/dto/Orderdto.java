@@ -27,5 +27,6 @@ public class Orderdto {
 	private int quantity;
 	private List<String> outletname;
 	private String username;
+	
 
 }

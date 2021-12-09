@@ -50,7 +50,11 @@ public class Orderserviceimpl implements Orderservice {
 		o1.setOrder_canceled(orders.getOrder_canceled());
 		o1.setCustomerdeliveryaddress(orders.getCustomerdeliveryaddress());
 		o1.setOrderstatus(orders.getOrderstatus());
-		o1.setQuantity(orders.getQuantity());
+		
+		Orders q=orderrepo.findQuantity(orders.getQuantity());
+		int quantity=q.getQuantity();
+		o1.setQuantity(quantity);
+		
 		
 		List<Products> products= prepo.find(orders.getProductname());
 		

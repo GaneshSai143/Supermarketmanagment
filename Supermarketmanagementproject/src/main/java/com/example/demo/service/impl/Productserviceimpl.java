@@ -46,6 +46,9 @@ public class Productserviceimpl implements Productservice {
 	/*int quantity=p.setQuantity(user.getQuantity());
 	public int getQuantity()
     {
+    
+    int q=user.getQuantity()-user.getOrderquantity();
+    p.setquantity(q);
    	 quantity =this.quantity-this.orderquantity;
    	 return quantity;
     }*/
