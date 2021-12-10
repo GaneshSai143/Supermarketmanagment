@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Orders;
+import com.example.demo.entity.Products;
 import com.example.demo.entity.dto.Orderdto;
+import com.example.demo.entity.dto.Productdto;
 import com.example.demo.service.impl.Orderserviceimpl;
 
 @RestController
+@RequestMapping("/orders")
 public class Ordercontroller {
 	
 	@Autowired
@@ -35,5 +42,13 @@ public class Ordercontroller {
         return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();
            
 	}
+	
+	/*@PutMapping(value="/orders/{outletnames}")
+	public void updatethequanity(@RequestBody Orderdto orders ,@PathVariable List<String> outletnames) {
+		orders.setOutletnames(outletnames);
+		oservice.productandorderquantity(outletnames);
+		
+		}*/
 
 }
+

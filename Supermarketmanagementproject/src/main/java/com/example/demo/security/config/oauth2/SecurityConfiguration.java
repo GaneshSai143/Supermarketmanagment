@@ -46,9 +46,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	
     	http.csrf().disable().authorizeRequests().antMatchers("/api/get").permitAll()
-    	.antMatchers("/user","/products","/outlets").hasAnyAuthority("ROLE_SUPER_ADMIN").anyRequest()
+    	.antMatchers("/user").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_OUTLET_ADMIN","ROLE_CUSTOMER")
+    	.antMatchers("/products").hasAnyAuthority("ROLE_OUTLET_ADMIN")
+    	.antMatchers("/orders").hasAnyAuthority("ROLE_CUSTOMER")
+    	.anyRequest()
     	.authenticated().and().formLogin().disable();
        
     }
+    
+   
+    
 }

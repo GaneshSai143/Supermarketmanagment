@@ -169,9 +169,9 @@ Optional<Outlet> shops=this.orepo.findById(id);
 
 	/*@Override
 	@Transactional
-	public int prodductquantity(Outletdto products) throws Exception {
+	public void prodductquantity(Outletdto products) throws Exception {
 		
-		return 0;
+		Outlet o=orepo.findorderquantity(products.getOutletname());
+		
 	}*/
-
 }

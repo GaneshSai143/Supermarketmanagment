@@ -69,26 +69,6 @@ public class User implements UserDetails, Serializable {
 	@Column(name="email",unique = true)
 	private String emailid;
 	
-	
-	/*@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_outlet_id", referencedColumnName = "id")	
-	@OrderBy
-	@JsonIgnore
-	private List<Outlet> outlets;
-	
-	/*@OneToMany(fetch = FetchType.LAZY)
-	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
-	@OrderBy
-	@JsonIgnore
-	private List<Products> products;
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	 @JoinColumn(name = "user_id", referencedColumnName = "id")	
-	@OrderBy
-	@JsonIgnore
-	private Collection<Orders> orders;
-	
-*/
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_authority", 
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 

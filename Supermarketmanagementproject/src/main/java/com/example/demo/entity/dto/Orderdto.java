@@ -26,6 +26,9 @@ public class Orderdto {
 	private List<String> productname;
 	private int quantity;
 	private List<String> outletname;
+	
+	private List<String> outletnames;
+	private int productquantity;
 	private String username;
 	
 

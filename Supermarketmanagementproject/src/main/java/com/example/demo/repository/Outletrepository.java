@@ -15,4 +15,10 @@ public interface Outletrepository extends JpaRepository<Outlet, Integer> {
 
 	@Query(value = "SELECT * FROM Outlet o where o.outletname IN (:outletname) ", nativeQuery = true)
     List<Outlet> find(@Param("outletname") List<String> outletname);
+	
+	@Query(value = "select * from outlet o inner join outlet_orders oo on o.id=oo.outlet_id \r\n"
+			+ "inner join orders o1 on oo.order_id=o1.id where o.outletname=:outletnames", nativeQuery = true)
+    List<Outlet> findorderquantity(@Param("outletnames") List<String> outletnames);
+	
+	
 }

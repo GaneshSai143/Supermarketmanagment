@@ -41,13 +41,7 @@ public class Products {
  private int quantity;
  private long price;
  
- /*@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "order_products", 
-		joinColumns = @JoinColumn(name = "user_product_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
-	@OrderBy
-	@JsonIgnore
-	private Collection<Orders> orders ;*/
+
  
  
  @ManyToOne(fetch = FetchType.LAZY)

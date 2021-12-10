@@ -3,6 +3,8 @@ package com.example.demo.service.impl;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +40,18 @@ public class Productserviceimpl implements Productservice {
 		p.setPrice(user.getPrice());
 		
 		
-		User u= this.urepo.findByUsername(user.getUsername());
-		p.setUser(u);
+		User u= null;
+		
+		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (users instanceof UserDetails) {
+		  String username = ((UserDetails)users).getUsername();
+		  u=this.urepo.findByUsername(username);
+		  p.setUser(u);
+		} else {
+		  String username = users.toString();
+	}
+		
 		return prepo.save(p);
 	}
 	

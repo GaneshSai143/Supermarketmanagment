@@ -1,8 +1,11 @@
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +42,8 @@ public class Orderserviceimpl implements Orderservice {
 
 		return orderrepo.findAll();
 	}
+	
+	
 
 	@Override
 	@Transactional
@@ -51,9 +56,7 @@ public class Orderserviceimpl implements Orderservice {
 		o1.setCustomerdeliveryaddress(orders.getCustomerdeliveryaddress());
 		o1.setOrderstatus(orders.getOrderstatus());
 		
-		Orders q=orderrepo.findQuantity(orders.getQuantity());
-		int quantity=q.getQuantity();
-		o1.setQuantity(quantity);
+		o1.setQuantity(orders.getQuantity());
 		
 		
 		List<Products> products= prepo.find(orders.getProductname());
@@ -65,11 +68,46 @@ public class Orderserviceimpl implements Orderservice {
     
     	o1.setOutlets(outlets);
     	
-    	User u1= urepo.findByUsername(orders.getUsername());
-    	o1.setUser(u1);
+User u= null;
+		
+		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (users instanceof UserDetails) {
+		  String username = ((UserDetails)users).getUsername();
+		  u=this.urepo.findByUsername(username);
+		  o1.setUser(u);
+		} else {
+		  String username = users.toString();
+	}
+    	
     	
 		
 		return orderrepo.save(o1);
+	}
+
+	@Override
+	@Transactional
+	public void productandorderquantity(Orderdto orders) {
+		/*Outlet o=this.orepo.findorderquantity(outletnames);
+		System.out.println(o);*/
+		int prodductquantity=orders.getProductquantity();
+		int quantity=orders.getQuantity();
+		Products p = prepo.findQuantity(prodductquantity);
+		int q=prodductquantity-quantity;
+		Products p1=new Products();
+		
+		p1.setQuantity(q);
+		
+		
+		
+		List<Outlet> shops=orepo.findorderquantity(orders.getOutletnames());
+		List<Products>product=new ArrayList<Products>();
+		product.add(p1);
+		
+		
+		Orders cart= new Orders();
+		cart.setProducts(product);
+		cart.setOutlets(shops);	
 	}
 
 }

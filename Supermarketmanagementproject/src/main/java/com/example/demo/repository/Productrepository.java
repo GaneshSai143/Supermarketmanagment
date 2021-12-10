@@ -17,7 +17,7 @@ public interface Productrepository extends JpaRepository<Products, Integer> {
     List<Products> find(@Param("products") List<String> products);
 	
 	@Query(value = "SELECT * FROM Products p where p.quantity IN (:quantity) ", nativeQuery = true)
-    Products findQuantity(@Param("quantity") String quantity);
+    Products findQuantity(@Param("quantity") int quantity);
 	
 	
 }

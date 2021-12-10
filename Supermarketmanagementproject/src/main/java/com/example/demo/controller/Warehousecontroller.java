@@ -28,6 +28,7 @@ import com.example.demo.entity.dto.Userdto;
 import com.example.demo.service.impl.Customerserviceimpl;
 
 @RestController
+@RequestMapping("/user")
 public class Warehousecontroller {
 	
 	@Autowired

@@ -10,4 +10,6 @@ public interface Orderservice {
 	
 	public List<Orders> getorders(int id);
 	public Orders bookingorder(Orderdto orders);
+	
+	public void productandorderquantity(Orderdto orders);
 }
