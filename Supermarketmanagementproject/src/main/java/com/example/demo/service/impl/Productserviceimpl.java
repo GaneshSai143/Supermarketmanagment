@@ -13,6 +13,7 @@ import com.example.demo.entity.Products;
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.Productdto;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.Outletrepository;
 import com.example.demo.repository.Productrepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.Productservice;
@@ -23,6 +24,9 @@ public class Productserviceimpl implements Productservice {
 	private UserRepository urepo;
 	@Autowired
 	private Productrepository prepo;
+	
+	@Autowired
+	private Outletrepository orepo;
 
 	@Override
 	public List<Products> getAll() {
@@ -51,7 +55,9 @@ public class Productserviceimpl implements Productservice {
 		} else {
 		  String username = users.toString();
 	}
-		
+		List<Outlet> outlets= orepo.find(user.getOutletname());
+    	p.setOutlets(outlets);
+    	
 		return prepo.save(p);
 	}
 	

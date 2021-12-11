@@ -21,6 +21,7 @@ import com.example.demo.entity.Products;
 import com.example.demo.entity.dto.Orderdto;
 import com.example.demo.entity.dto.Productdto;
 import com.example.demo.service.impl.Orderserviceimpl;
+import com.example.demo.service.impl.Productserviceimpl;
 
 @RestController
 @RequestMapping("/orders")
@@ -29,10 +30,13 @@ public class Ordercontroller {
 	@Autowired
 	private Orderserviceimpl oservice;
 	
-	/*@GetMapping(value="/outlet/{id}")
-	public ResponseEntity<Orders> getUserById(@PathVariable int id) {
-		return ResponseEntity.ok().body(this.oservice.getOutletById(id));
-	}*/
+	@Autowired
+	private Productserviceimpl pservice;
+	
+	@GetMapping(value="/order/{id}")
+	public int getquantities(@RequestBody Orderdto orders, @PathVariable int id) {
+		 return this.oservice.productandorderquantity(id);
+	}
 	
 	@PostMapping("/orders")
 	public ResponseEntity<Orders> create(@Valid @RequestBody Orderdto orders) throws Exception {
@@ -43,12 +47,13 @@ public class Ordercontroller {
            
 	}
 	
-	/*@PutMapping(value="/orders/{outletnames}")
-	public void updatethequanity(@RequestBody Orderdto orders ,@PathVariable List<String> outletnames) {
-		orders.setOutletnames(outletnames);
-		oservice.productandorderquantity(outletnames);
-		
-		}*/
+	@PutMapping(value="/orders/{id}")
+	public Orders updatethequanity(@RequestBody Orderdto orders ,@PathVariable int id) {
+		orders.setId(id);
+		System.out.println(id+"controller id");
+		return oservice.update(orders);
+	
+		}
 
 }
 

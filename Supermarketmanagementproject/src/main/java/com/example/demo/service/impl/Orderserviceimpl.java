@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,8 @@ import com.example.demo.entity.Outlet;
 import com.example.demo.entity.Products;
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.Orderdto;
+import com.example.demo.entity.dto.Outletdto;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.Orderrepository;
 import com.example.demo.repository.Outletrepository;
 import com.example.demo.repository.Productrepository;
@@ -86,28 +89,69 @@ User u= null;
 	}
 
 	@Override
-	@Transactional
-	public void productandorderquantity(Orderdto orders) {
-		/*Outlet o=this.orepo.findorderquantity(outletnames);
-		System.out.println(o);*/
-		int prodductquantity=orders.getProductquantity();
-		int quantity=orders.getQuantity();
-		Products p = prepo.findQuantity(prodductquantity);
-		int q=prodductquantity-quantity;
-		Products p1=new Products();
+	
+	public int productandorderquantity(int id) {
+		int o= orderrepo.findByQuantity(id);
+		System.out.println(o);
 		
-		p1.setQuantity(q);
-		
-		
-		
-		List<Outlet> shops=orepo.findorderquantity(orders.getOutletnames());
-		List<Products>product=new ArrayList<Products>();
-		product.add(p1);
-		
-		
-		Orders cart= new Orders();
-		cart.setProducts(product);
-		cart.setOutlets(shops);	
+		return o;
+	
 	}
 
+
+
+	@Override
+	@Transactional
+	public Orders update(Orderdto user) {
+		
+	Optional<Orders> o= orderrepo.findById(user.getId());
+	if(o.isPresent()) {
+		Orders o1=new Orders();
+		o1.setOrder_name(user.getOrder_name());
+		o1.setOrder_delivered(user.getOrder_delivered());
+		o1.setOrder_canceled(user.getOrder_canceled());
+		o1.setCustomerdeliveryaddress(user.getCustomerdeliveryaddress());
+		o1.setOrderstatus(user.getOrderstatus());
+		o1.setQuantity(user.getQuantity());
+User u= null;
+		
+		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (users instanceof UserDetails) {
+		  String username = ((UserDetails)users).getUsername();
+		  u=this.urepo.findByUsername(username);
+		  o1.setUser(u);
+		} else {
+		  String username = users.toString();
+	}
+
+		  
+		  Products p1=new Products();
+		  int i=user.getId();
+		  System.out.println(i);
+		  
+		Products p= prepo.findProducts(user.getId());
+		
+		p1.setId(p.getId());
+		p1.setPname(p.getPname());
+		p1.setPrice(p.getPrice());
+		p1.setQuantity(orderrepo.findByQuantity(user.getId()));
+		//p1.setUser(p.getUser());
+		
+		o1.setProducts(List.of(p1));
+		List<Outlet> outlets= orepo.find(user.getOutletname());
+    	p1.setOutlets(outlets);
+		prepo.save(p1);
+		return orderrepo.save(o1);
+		
+	}
+	else
+	{
+		throw new ResourceNotFoundException("the order id was not found");
+	}
+	}
+	
+	
 }
+
+	

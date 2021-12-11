@@ -21,6 +21,7 @@ public class Productdto {
 	 private long price; 
 	 private String  username;
      private int orderquantity;
+     private List<String> outletname;
      
      
      

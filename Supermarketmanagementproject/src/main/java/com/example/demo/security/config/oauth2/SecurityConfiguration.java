@@ -48,9 +48,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	
     	http.csrf().disable().authorizeRequests().antMatchers("/api/get").permitAll()
-    	.antMatchers("/user").hasAnyAuthority("ROLE_SUPER_ADMIN","ROLE_OUTLET_ADMIN","ROLE_CUSTOMER")
-    	.antMatchers("/products").hasAnyAuthority("ROLE_OUTLET_ADMIN")
-    	.antMatchers("/orders").hasAnyAuthority("ROLE_CUSTOMER")
+    	.antMatchers("/customerregister").permitAll()
+    	.antMatchers("/outlets","/products").hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	.antMatchers("/products","/orders","/outlets").hasAnyAuthority("ROLE_OUTLET_ADMIN")
+    	.antMatchers("/orders","/user").hasAnyAuthority("ROLE_CUSTOMER")
     	.anyRequest()
     	.authenticated().and().formLogin().disable();
        

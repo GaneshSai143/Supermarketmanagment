@@ -102,8 +102,8 @@ public class Outletserviceimpl implements Outletservice{
         u= urepo.save(user1);
      
         
-        	List<Products> products= prepo.find(user.getProducts());
-        	shops.setProducts(products);
+        	/*List<Products> products= prepo.find(user.getProducts());
+        	shops.setProducts(products);*/
         	
         	
         	shops.setUser(u);

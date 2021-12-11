@@ -36,13 +36,13 @@ public class Outlet {
 	
 	private String outletname;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	/*@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "Outlet_products", 
 		joinColumns = @JoinColumn(name = "user_outlet_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
 	@OrderBy
 	@JsonIgnore
-	private Collection<Products> products ;
+	private Collection<Products> products ;*/
  
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
