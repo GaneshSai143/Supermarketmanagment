@@ -32,7 +32,7 @@ public class Productcontroller {
 		return pservice.getAll();
 	}
 	
-	@PostMapping("/products")
+	@PostMapping("/product")
 	public ResponseEntity<Products> saveproducts(@RequestBody Productdto user){
 		
 		

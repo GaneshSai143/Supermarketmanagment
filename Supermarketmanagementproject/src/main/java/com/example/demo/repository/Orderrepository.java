@@ -15,17 +15,10 @@ import com.example.demo.entity.Products;
 @Repository
 public interface Orderrepository extends JpaRepository<Orders, Integer> {
 
-	@Query(value = "\r\n"
-			+ "select p.quantity-o.quantity from orders o join order_products op on op.orders_id=o.id\r\n"
-			+ "join products p on p.id=op.product_id \r\n"
-			+ "where o.id=:id",
-			 nativeQuery = true)
+	@Query(value="select  u.email  from\r\n"
+			+ "orders oo join user_info u on u.id=oo.user_id where oo.id= :id" ,nativeQuery = true)
+	String finduserEmail(@Param("id") int id);
+	
+	@Query(value = "select quantity from orders where id= :id" ,nativeQuery = true)
 	int findByQuantity(@Param("id") int id);
-	
-	/*@Query(value=
-			"select p.* from products p join order_products op on op.product_id=p.id \r\n"
-			+ " where op.orders_id in(:id)", nativeQuery = true
-			)
-	Products findProducts(@Param("id") int id);*/
-	
 }

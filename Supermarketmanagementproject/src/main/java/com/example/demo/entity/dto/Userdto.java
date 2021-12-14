@@ -29,7 +29,7 @@ public class Userdto {
     private String username;
     private String password;
     private String emailId;
-    private List<String> roletype;
+    private String roletype;
    
     
 }

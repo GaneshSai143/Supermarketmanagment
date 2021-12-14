@@ -61,15 +61,6 @@ public class Productserviceimpl implements Productservice {
 		return prepo.save(p);
 	}
 	
-	/*int quantity=p.setQuantity(user.getQuantity());
-	public int getQuantity()
-    {
-    
-    int q=user.getQuantity()-user.getOrderquantity();
-    p.setquantity(q);
-   	 quantity =this.quantity-this.orderquantity;
-   	 return quantity;
-    }*/
 
 	@Override
 	@Transactional
@@ -81,6 +72,7 @@ public class Productserviceimpl implements Productservice {
 			p.setPname(user.getPname());
 			p.setPrice(user.getPrice());
 			p.setQuantity(user.getQuantity());
+			
 			
 			prepo.save(p);
 			return p;

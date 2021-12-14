@@ -19,11 +19,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.demo.controller.Emailvalid;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
@@ -55,17 +57,23 @@ public class User implements UserDetails, Serializable {
 	@Column(name="user_name")
 	private String username;
 	
+	
+	@NotNull(message="password should not leaave")
 	@Column(name="password")
 	private String password;
 	
+	@NotEmpty
+	@NotNull(message="the firstname was required")
 	@Column(name="first_name")
 	private String firstName;
 	
+	@NotNull(message="lastname was also required")
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Pattern(regexp ="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$",message="mail id is not valid")
+	@Emailvalid
 	@NotEmpty
+	@NotNull(message="the email was required")
 	@Column(name="email",unique = true)
 	private String emailid;
 	

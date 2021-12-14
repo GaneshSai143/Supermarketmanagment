@@ -15,7 +15,9 @@ public interface Orderservice {
 	public List<Orders> getorders(int id);
 	public Orders bookingorder(Orderdto orders);
 	
-	public int productandorderquantity(int id);
+	public int productandorderquantity(int id)throws Exception;
 	
 	public Orders update(Orderdto user);
+	
+	public void delete(int id);
 }

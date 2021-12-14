@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class Ordercontroller {
 	private Productserviceimpl pservice;
 	
 	@GetMapping(value="/order/{id}")
-	public int getquantities(@RequestBody Orderdto orders, @PathVariable int id) {
+	public int getquantities(@RequestBody Orderdto orders, @PathVariable int id) throws Exception{
 		 return this.oservice.productandorderquantity(id);
 	}
 	
@@ -54,6 +55,16 @@ public class Ordercontroller {
 		return oservice.update(orders);
 	
 		}
+	
+	@GetMapping("/productqupdate/{id}")
+	public int updateproduct(@PathVariable int id)throws Exception {
+		return oservice.productandorderquantity(id);
+	}
+	
+	@DeleteMapping("/orderdelete/{id}")
+	public void deleteproducts(@PathVariable ("id") int id) {
+		oservice.delete(id);
+	}
 
 }
 

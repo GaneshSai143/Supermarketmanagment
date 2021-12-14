@@ -66,5 +66,10 @@ public class Outletcontroller {
 			return HttpStatus.OK;
 	        
 	    }
+	
+	@GetMapping("/sendemail/{id}")
+	public String updateproduct(@PathVariable int id)throws Exception {
+		return outletservice.Emailsend(id);
+	}
 
 }

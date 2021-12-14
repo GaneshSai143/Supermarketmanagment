@@ -23,4 +23,14 @@ public interface Productrepository extends JpaRepository<Products, Integer> {
 	Products findProducts(@Param("id") int id);
 	
 	
+	@Query(value="select p.quantity from products p join order_products op on p.id=op.product_id\r\n"
+			+ "where op.orders_id= :id" , nativeQuery = true)
+	int findProductQuantity(@Param("id") int id);
+	
+	@Query(value ="select p.* from products p join order_products op on p.id=op.product_id\r\n"
+			+ "join orders c on op.orders_id=c.id join outlet_orders oc on c.id=oc.order_id\r\n"
+			+ "where p.quantity <=0 and oc.outlet_id=:id"
+			 ,nativeQuery = true)
+	
+	Products findproductsq(@Param("id") int id);
 }

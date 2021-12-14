@@ -17,6 +17,8 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.dto.Orderdto;
 import com.example.demo.entity.dto.Outletdto;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.mail.Email;
+import com.example.demo.mail.Emailserviceimpl;
 import com.example.demo.repository.Orderrepository;
 import com.example.demo.repository.Outletrepository;
 import com.example.demo.repository.Productrepository;
@@ -33,9 +35,9 @@ public class Orderserviceimpl implements Orderservice {
 	private Outletrepository orepo;
 	@Autowired
 	private Productrepository prepo;
-	
 
-	
+	@Autowired
+	private Emailserviceimpl emailservice;
 	@Autowired
 	private Orderrepository orderrepo;
 	
@@ -89,12 +91,31 @@ User u= null;
 	}
 
 	@Override
-	
-	public int productandorderquantity(int id) {
+	@Transactional
+	public int productandorderquantity(int id)throws Exception {
 		int o= orderrepo.findByQuantity(id);
-		System.out.println(o);
+		int pq=prepo.findProductQuantity(id);
+		int q=pq-o;
 		
-		return o;
+		Products p= prepo.findProducts(id);
+		Products p1=new Products();
+		p1.setId(p.getId());
+		p1.setPname(p.getPname());
+		p1.setPrice(p.getPrice());
+		p1.setQuantity(q);
+		p1.setUser(p.getUser());
+		p1.setOutlets(p.getOutlets());
+		prepo.save(p1);
+		
+		String email=orderrepo.finduserEmail(id);
+		
+		Email mail = new Email();
+		  mail.setSubject("Welcome to Super market Management System Program");
+		  mail.setToEmail(email);
+		  mail.setContent("You have ordered sucessfully with order_id : "+id);
+		  emailservice.sendEmail(mail);
+		
+		return q;
 	
 	}
 
@@ -106,49 +127,43 @@ User u= null;
 		
 	Optional<Orders> o= orderrepo.findById(user.getId());
 	if(o.isPresent()) {
-		Orders o1=new Orders();
+		Orders o1=o.get();
 		o1.setOrder_name(user.getOrder_name());
+		System.out.println(user.getOrder_name()+"oname");
 		o1.setOrder_delivered(user.getOrder_delivered());
 		o1.setOrder_canceled(user.getOrder_canceled());
 		o1.setCustomerdeliveryaddress(user.getCustomerdeliveryaddress());
 		o1.setOrderstatus(user.getOrderstatus());
 		o1.setQuantity(user.getQuantity());
-User u= null;
-		
-		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (users instanceof UserDetails) {
-		  String username = ((UserDetails)users).getUsername();
-		  u=this.urepo.findByUsername(username);
-		  o1.setUser(u);
-		} else {
-		  String username = users.toString();
-	}
+		System.out.println(user.getQuantity());
 
 		  
-		  Products p1=new Products();
-		  int i=user.getId();
-		  System.out.println(i);
-		  
-		Products p= prepo.findProducts(user.getId());
-		
-		p1.setId(p.getId());
-		p1.setPname(p.getPname());
-		p1.setPrice(p.getPrice());
-		p1.setQuantity(orderrepo.findByQuantity(user.getId()));
-		//p1.setUser(p.getUser());
-		
-		o1.setProducts(List.of(p1));
-		List<Outlet> outlets= orepo.find(user.getOutletname());
-    	p1.setOutlets(outlets);
-		prepo.save(p1);
-		return orderrepo.save(o1);
+		 orderrepo.save(o1);
+		 
+		 return o1;
 		
 	}
 	else
 	{
 		throw new ResourceNotFoundException("the order id was not found");
 	}
+	}
+
+
+
+	@Override
+	@Transactional
+	public void delete(int id) {
+		Optional<Orders> odelete=this.orderrepo.findById(id);
+		if(odelete.isPresent()) {
+			this.orderrepo.deleteById(id);
+			
+		}
+		
+		else {
+			throw  new ResourceNotFoundException("Record not found with id  :" +id);
+		}
+		
 	}
 	
 	

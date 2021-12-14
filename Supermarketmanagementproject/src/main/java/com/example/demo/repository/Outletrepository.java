@@ -20,5 +20,9 @@ public interface Outletrepository extends JpaRepository<Outlet, Integer> {
 			+ "inner join orders o1 on oo.order_id=o1.id where o.outletname=:outletnames", nativeQuery = true)
     List<Outlet> findorderquantity(@Param("outletnames") List<String> outletnames);
 	
+	@Query(value= "select u.email from outlet o join user_info u on o.user_id=u.id where o.id= :id" ,nativeQuery = true)
+	String finduserEmail(@Param("id") int id);
 	
+	@Query(value ="select outletname from outlet where id=:id" ,nativeQuery = true)
+	String findOutletname(@Param("id") int id);
 }

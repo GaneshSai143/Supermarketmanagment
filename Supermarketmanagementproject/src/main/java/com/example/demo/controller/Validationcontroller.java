@@ -2,7 +2,11 @@ package com.example.demo.controller;
 
 
 import java.util.HashMap;
+import java.util.*;
 import java.util.Map;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -29,6 +34,19 @@ public class Validationcontroller extends ResponseEntityExceptionHandler{
 			errors.put(fieldName, message);
 		});
 		return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler({ ConstraintViolationException.class })
+	public ResponseEntity<Object> handleConstraintViolation(
+	  ConstraintViolationException ex, WebRequest request) {
+	    List<String> errors = new ArrayList<String>();
+	    for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+	        errors.add(violation.getRootBeanClass().getName() + " " + 
+	          violation.getPropertyPath() + ": " + violation.getMessage());
+	    }
+
+	    
+	    return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
 	}
 
 }

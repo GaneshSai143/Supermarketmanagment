@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,8 +38,12 @@ public class Products {
 	
  private int id;
  @Column(name="product_name")
+ 
+ @NotNull(message="please provide productname")
  private String pname;
+ @NotNull(message="please provide quantity")
  private int quantity;
+ @NotNull(message="please provide price")
  private long price;
  
  @ManyToMany(fetch = FetchType.LAZY)
@@ -46,6 +51,7 @@ public class Products {
 		joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "user_outlet_id", referencedColumnName = "id"))
 	@OrderBy
+	@NotNull(message="please valid outletname")
 	@JsonIgnore
 	private Collection<Outlet> outlets ;
  

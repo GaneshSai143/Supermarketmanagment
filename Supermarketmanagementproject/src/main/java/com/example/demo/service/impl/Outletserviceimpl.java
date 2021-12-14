@@ -84,39 +84,56 @@ public class Outletserviceimpl implements Outletservice{
         
         
         List<Authority> allList=rrepo.findAll();
-        String RoleSuper=allList.get(0).getName();
+        /*String RoleSuper=allList.get(0).getName();
         List<String> SuperAdminList=new ArrayList<String>();
         SuperAdminList.add(RoleSuper);
         
-        List<Authority> addAuthorities=rrepo.find(users.getRoletype());
-       
-        if(SuperAdminList.equals(users.getRoletype()))
-        {
-        	throw new ResourceNotFoundException("this role was not added ");
-        }
-        else
-        {
-        user1.setAuthorities(addAuthorities);
+        List<Authority> addAuthorities=rrepo.find(users.getRoletype());*/
         
+        List<Authority> addList=rrepo.find(users.getRoletype().toUpperCase());
+       for(int i=0;i<allList.size();i++)
+       { 
+      	 
+      	if(users.getRoletype().equalsIgnoreCase(allList.get(i).getAuthority()))
+      	 {
+      		 System.out.println("if manin "+users.getRoletype());
+      		
+      		 if(users.getRoletype().equalsIgnoreCase(allList.get(0).getAuthority()))
+      			{
+      			
+      			 System.out.println(allList.get(i).getAuthority()+"inner if");
+      			 throw new ResourceNotFoundException("u cant add");
+      		 }
+      		 
+      		 else if(allList.get(0).getAuthority()!=users.getRoletype()&&users.getRoletype().equals(allList.get(1).getAuthority())){
+      			
+          		 user1.setAuthorities(addList);
+          		u= urepo.save(user1);
         }
-        u= urepo.save(user1);
-     
+        
+      		 else {
+      			throw new ResourceNotFoundException("u cant add");
+      		 }
         
         	/*List<Products> products= prepo.find(user.getProducts());
         	shops.setProducts(products);*/
         	
         	
         	shops.setUser(u);
-        	
+      	 }
+       }
         
   Email mail = new Email();
   mail.setSubject("Welcome to Super market Management System Program");
   mail.setToEmail(user1.getEmailid());
-  mail.setContent("You were added by "+RoleSuper+"\n" +"Username :"+users.getUsername() +"\n"+ "password :"+pass);
+  mail.setContent("You were added by "+users.getRoletype()+"\n" +"Username :"+users.getUsername() +"\n"+ "password :"+pass);
   emailservice.sendEmail(mail);
 
 		return orepo.save(shops);
 	}
+       
+	
+       
 	
 	
 
@@ -166,12 +183,44 @@ Optional<Outlet> shops=this.orepo.findById(id);
 		}
 		
 	}
+	
+	
 
-	/*@Override
+	@Override
 	@Transactional
-	public void prodductquantity(Outletdto products) throws Exception {
+	public String Emailsend(int id) throws Exception {
 		
-		Outlet o=orepo.findorderquantity(products.getOutletname());
+		String email= rrepo.findByName();
+		System.out.println(email+"superadmin");
+		String shopname=orepo.findOutletname(id);
+		Products p= prepo.findproductsq(id);
+		Products p1=new Products();
+		p1.setId(p.getId());
+		System.out.println(p.getId()+"p id");
+		p1.setPname(p.getPname());
+		p1.setPrice(p.getPrice());
+		System.out.println(p.getPrice());
+		int q=p.getQuantity();
+		p1.setQuantity(q);
+		System.out.println(q);
+		p1.setUser(p.getUser());
+		System.out.println(p.getUser()+"user");
+		p1.setOutlets(p.getOutlets());
+		System.out.println(p.getOutlets()+"shops");
 		
-	}*/
+		
+		
+		if(q<=0)
+		{
+			Email mail = new Email();
+			  mail.setSubject("Welcome to Super market Management System Program");
+			  mail.setToEmail(email);
+			  mail.setContent("products was null"+shopname+" in this shop please add the products");
+			  emailservice.sendEmail(mail);
+			
+		}
+		return email;
+	}
+
+	
 }

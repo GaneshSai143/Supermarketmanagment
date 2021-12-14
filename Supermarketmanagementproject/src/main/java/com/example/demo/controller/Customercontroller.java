@@ -29,7 +29,7 @@ import com.example.demo.service.impl.Customerserviceimpl;
 
 @RestController
 @RequestMapping("/user")
-public class Warehousecontroller {
+public class Customercontroller {
 	
 	@Autowired
 	private Customerserviceimpl detailsServiceImpl;

@@ -15,7 +15,7 @@ public interface Outletservice {
 		
 		public Outlet update(Outletdto user);
 		
-		//public void prodductquantity(Outletdto p)throws Exception;
+		public String Emailsend(int id)throws Exception;
 		 public void delete(int id);
 		 Outlet getOutletById(int id);
 }
