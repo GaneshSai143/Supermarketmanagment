@@ -46,15 +46,15 @@ public class Customercontroller {
 			return ResponseEntity.ok().body(detailsServiceImpl.getUserById(id));
 		}
 		
-		@RequestMapping(value="/user",method = RequestMethod.POST, produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	/*	@RequestMapping(value="/user",method = RequestMethod.POST, produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	    @ResponseStatus(value = HttpStatus.OK)
 	    public ResponseEntity<User> create(@Valid @RequestBody Userdto user) throws Exception {
 	        detailsServiceImpl.create(user);
 	        HttpHeaders headers = new HttpHeaders();
 	        
-	        return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();
+	        return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();u
 	           
-		}
+		}*/
 		
 		
 		

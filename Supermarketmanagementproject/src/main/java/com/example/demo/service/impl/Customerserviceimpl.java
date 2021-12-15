@@ -47,7 +47,7 @@ public class Customerserviceimpl implements Userservice {
 		 return userRepository.findAll();
 	 }
 
-	@Override
+	/*@Override
 	@Transactional
 	public User create(Userdto user) throws Exception{
 	        User userWithDuplicateUsername = userRepository.findByUsername(user.getUsername());
@@ -100,7 +100,7 @@ public class Customerserviceimpl implements Userservice {
 	  return u2;
 	  
 	}
-	
+	*/
 	
 	
 	
