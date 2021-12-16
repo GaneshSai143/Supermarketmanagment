@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,7 @@ public class Productcontroller {
 	}
 	
 	@PostMapping("/product")
-	public ResponseEntity<Products> saveproducts(@RequestBody Productdto user){
+	public ResponseEntity<Products> saveproducts(@Valid @RequestBody Productdto user){
 		
 		
 		 pservice.create(user);
@@ -42,19 +44,19 @@ public class Productcontroller {
 	}
 	
 	@GetMapping(value="/product/{id}")
-	public ResponseEntity<Products> getUserById(@PathVariable int id) {
+	public ResponseEntity<Products> getUserById(@Valid @PathVariable int id) {
 		return ResponseEntity.ok().body(pservice.getProductById(id));
 	}
 	
 	@PutMapping(value="/products/{id}")
-	public ResponseEntity<Products> update(@RequestBody Productdto items,@PathVariable int id) {
+	public ResponseEntity<Products> update(@Valid @RequestBody Productdto items,@PathVariable int id) {
 		items.setId(id);
 		return ResponseEntity.ok().body(this.pservice.update(items));
 		
 		}
 	
 	@DeleteMapping("/productdelete/{id}")
-	public void deleteproducts(@PathVariable ("id") int id) {
+	public void deleteproducts(@Valid @PathVariable ("id") int id) {
 		pservice.delete(id);
 	}
 

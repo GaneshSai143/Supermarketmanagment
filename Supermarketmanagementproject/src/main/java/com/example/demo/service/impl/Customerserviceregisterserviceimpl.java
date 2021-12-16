@@ -71,7 +71,7 @@ public class Customerserviceregisterserviceimpl implements Customerregisterservi
 	        
 	        List<Authority> addAuthorities=rrepo.find(user.getRoletype());
 	       
-	        if(SuperAdminList.equals(user.getRoletype()))
+	        if(RoleSuper.equals(user.getRoletype()))
 	        {
 	        	user1.setAuthorities(addAuthorities);
 	            u2= userRepository.save(user1);

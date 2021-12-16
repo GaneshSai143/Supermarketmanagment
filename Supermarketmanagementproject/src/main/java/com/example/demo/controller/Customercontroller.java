@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.dto.Userdto;
 import com.example.demo.service.impl.Customerserviceimpl;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class Customercontroller {
@@ -41,8 +43,8 @@ public class Customercontroller {
 	        return detailsServiceImpl.getAll();
 	    }
 		
-		@GetMapping(value="/{id}")
-		public ResponseEntity<User> getUserById(@PathVariable int id) {
+		@GetMapping(value="/user/{id}")
+		public ResponseEntity<User> getUserById(@Valid @PathVariable int id) {
 			return ResponseEntity.ok().body(detailsServiceImpl.getUserById(id));
 		}
 		
@@ -60,7 +62,7 @@ public class Customercontroller {
 		
 		
 		@PutMapping("/edit/{id}")
-		public ResponseEntity<User> update(@RequestBody Userdto users,@PathVariable int id) {
+		public ResponseEntity<User> update(@Valid @RequestBody Userdto users,@PathVariable int id) {
 			users.setId(id);
 			
 			return ResponseEntity.ok().body(detailsServiceImpl.update(users));
@@ -69,7 +71,7 @@ public class Customercontroller {
 		
 		
 			@DeleteMapping("/delete/{id}")
-			public void deleteusers(@PathVariable ("id") int id) {
+			public void deleteusers(@Valid @PathVariable ("id") int id) {
 				detailsServiceImpl.delete(id);
 			}
 		

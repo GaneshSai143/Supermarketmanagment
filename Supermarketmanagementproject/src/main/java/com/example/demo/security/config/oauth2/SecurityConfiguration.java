@@ -49,9 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	
     	http.csrf().disable().authorizeRequests().antMatchers("/api/get").permitAll()
     	.antMatchers("/customerregister").permitAll()
-    	.antMatchers("/outlets","/products").hasAnyAuthority("ROLE_SUPER_ADMIN")
-    	.antMatchers("/products/products","/orders/productqupdate/{id}","/outlets","/user").hasAnyAuthority("ROLE_OUTLET_ADMIN")
-    	.antMatchers("/orders","/user").hasAnyAuthority("ROLE_CUSTOMER")
+    	.antMatchers("/outlets","/products").permitAll()//hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	.antMatchers("/products/products","/orders/productqupdate/{id}","/outlets","/user").permitAll()//.hasAnyAuthority("ROLE_OUTLET_ADMIN")
+    	.antMatchers("/orders","/user").permitAll()//.hasAnyAuthority("ROLE_CUSTOMER")
     	.anyRequest()
     	.authenticated().and().formLogin().disable();
        

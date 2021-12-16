@@ -35,7 +35,7 @@ public class Ordercontroller {
 	private Productserviceimpl pservice;
 	
 	@GetMapping(value="/order/{id}")
-	public int getquantities(@RequestBody Orderdto orders, @PathVariable int id) throws Exception{
+	public int getquantities(@Valid @RequestBody Orderdto orders, @PathVariable int id) throws Exception{
 		 return this.oservice.productandorderquantity(id);
 	}
 	
@@ -49,7 +49,7 @@ public class Ordercontroller {
 	}
 	
 	@PutMapping(value="/orders/{id}")
-	public Orders updatethequanity(@RequestBody Orderdto orders ,@PathVariable int id) {
+	public Orders updatethequanity(@Valid @RequestBody Orderdto orders ,@PathVariable int id) {
 		orders.setId(id);
 		System.out.println(id+"controller id");
 		return oservice.update(orders);
@@ -57,12 +57,12 @@ public class Ordercontroller {
 		}
 	
 	@GetMapping("/productqupdate/{id}")
-	public int updateproduct(@PathVariable int id)throws Exception {
+	public int updateproduct(@Valid @PathVariable int id)throws Exception {
 		return oservice.productandorderquantity(id);
 	}
 	
 	@DeleteMapping("/orderdelete/{id}")
-	public void deleteproducts(@PathVariable ("id") int id) {
+	public void deleteproducts(@Valid @PathVariable ("id") int id) {
 		oservice.delete(id);
 	}
 

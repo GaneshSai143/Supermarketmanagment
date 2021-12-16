@@ -38,7 +38,7 @@ public class Outletcontroller {
 	
 	
 	@GetMapping(value="/outlet/{id}")
-	public ResponseEntity<Outlet> getUserById(@PathVariable int id) {
+	public ResponseEntity<Outlet> getUserById(@Valid @PathVariable int id) {
 		return ResponseEntity.ok().body(this.outletservice.getOutletById(id));
 	}
 	
@@ -52,7 +52,7 @@ public class Outletcontroller {
 	}
 	
 	@PutMapping(value="/outlet/{id}")
-	public ResponseEntity<Outlet> update(@RequestBody Outletdto user,@PathVariable int id) {
+	public ResponseEntity<Outlet> update(@Valid @RequestBody Outletdto user,@PathVariable int id) {
 		user.setId(id);
 		return ResponseEntity.ok().body(this.outletservice.update(user));
 		
@@ -60,7 +60,7 @@ public class Outletcontroller {
 	
 	@DeleteMapping(value="outlet/{id}")
 	 @ResponseStatus(value = HttpStatus.OK)
-	 public HttpStatus delete(@PathVariable int id) {
+	 public HttpStatus delete(@Valid @PathVariable int id) {
 			System.out.println("delete sucessfully");
 			this.outletservice.delete(id);
 			return HttpStatus.OK;
@@ -68,7 +68,7 @@ public class Outletcontroller {
 	    }
 	
 	@GetMapping("/sendemail/{id}")
-	public String updateproduct(@PathVariable int id)throws Exception {
+	public String updateproduct(@Valid @PathVariable int id)throws Exception {
 		return outletservice.Emailsend(id);
 	}
 
