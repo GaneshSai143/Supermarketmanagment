@@ -69,10 +69,11 @@ public class Outletserviceimpl implements Outletservice{
 		
 		
         User user1 = new User();
-        user1.setEmailid(users.getEmailId());
+      
         user1.setFirstName(users.getFirstName());
         user1.setLastName(users.getLastName());
         user1.setUsername(users.getUsername());
+        user1.setEmailid(users.getEmailId());
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
         String pass=passwordGenerator.generateRandomPassword(8);
         String encodedPassword = passwordEncoder.encode(pass);
