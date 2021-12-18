@@ -45,15 +45,11 @@ public class Products {
  private int quantity;
  @NotNull(message="please provide price")
  private long price;
+ @NotNull(message="please enter code")
+ @Column(name="pcode", unique = true)
+ private int pcode;
  
- @ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "Outlet_products", 
-		joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "user_outlet_id", referencedColumnName = "id"))
-	@OrderBy
-	@NotNull(message="please valid outletname")
-	@JsonIgnore
-	private Collection<Outlet> outlets ;
+ 
  
  
  @ManyToOne(fetch = FetchType.LAZY)

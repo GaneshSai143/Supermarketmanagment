@@ -17,9 +17,11 @@ public class Outletdto {
 
 	private int id;
 	private String outletname;
+	private int ocode;
 	private Userdto userdto;
-	 private List<String> products;
+	 private List<Integer> pcode;
 	 private int quantity;
+	 private String ousername;
 	 
 	 
 }

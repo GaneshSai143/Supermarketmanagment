@@ -69,11 +69,11 @@ public class Customerserviceregisterserviceimpl implements Customerregisterservi
 	        List<String> SuperAdminList=new ArrayList<String>();
 	        SuperAdminList.add(RoleSuper);
 	        
-	        List<Authority> addAuthorities=rrepo.find(user.getRoletype());
+	        Authority addAuthorities=rrepo.find(user.getRoletype());
 	       
 	        if(RoleSuper.equals(user.getRoletype()))
 	        {
-	        	user1.setAuthorities(addAuthorities);
+	        	user1.setAuthorities(List.of(addAuthorities));
 	            u2= userRepository.save(user1);
 	        	
 	        }

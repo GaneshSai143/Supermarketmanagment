@@ -42,9 +42,11 @@ public class Productserviceimpl implements Productservice {
 		p.setPname(user.getPname());
 		p.setQuantity(user.getQuantity());
 		p.setPrice(user.getPrice());
+		p.setPcode(user.getPcode());
 		
-		
-		User u= null;
+		User u1 = urepo.findByUsername(user.getUsername());
+		p.setUser(u1);
+	/*	User u= null;
 		
 		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -55,8 +57,8 @@ public class Productserviceimpl implements Productservice {
 		} else {
 		  String username = users.toString();
 	}
-		List<Outlet> outlets= orepo.find(user.getOutletname());
-    	p.setOutlets(outlets);
+		/*List<Outlet> outlets= orepo.find(user.getOutletname());
+    	p.setOutlets(outlets);*/
     	
 		return prepo.save(p);
 	}

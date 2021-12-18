@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,7 +64,7 @@ public class Outletserviceimpl implements Outletservice{
 		
 		Outlet shops=new Outlet();
 		shops.setOutletname(user.getOutletname());
-		
+		shops.setOcode(user.getOcode());
 		
 		
 		Userdto users= user.getUserdto();
@@ -91,7 +93,7 @@ public class Outletserviceimpl implements Outletservice{
         
         List<Authority> addAuthorities=rrepo.find(users.getRoletype());*/
         
-        List<Authority> addList=rrepo.find(users.getRoletype().toUpperCase());
+        Authority addList=rrepo.find(users.getRoletype().toUpperCase());
        for(int i=0;i<allList.size();i++)
        { 
       	 
@@ -108,7 +110,7 @@ public class Outletserviceimpl implements Outletservice{
       		 
       		 else if(allList.get(0).getAuthority()!=users.getRoletype()&&users.getRoletype().equals(allList.get(1).getAuthority())){
       			
-          		 user1.setAuthorities(addList);
+          		 user1.setAuthorities(List.of(addList));
           		u= urepo.save(user1);
         }
         
@@ -116,9 +118,21 @@ public class Outletserviceimpl implements Outletservice{
       			throw new ResourceNotFoundException("u cant add");
       		 }
         
-        	/*List<Products> products= prepo.find(user.getProducts());
-        	shops.setProducts(products);*/
-        	
+        	List<Products> products= prepo.find(user.getPcode());
+        	shops.setProducts(products);
+        	User u1 = urepo.findByUsername(user.getOusername());
+    		shops.setCuser(u1);
+    	/*	User u12= null;
+    		
+    		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+    		if (users instanceof UserDetails) {
+    		  String username = ((UserDetails)users1).getUsername();
+    		  u=this.urepo.findByUsername(username);
+    		  shops.setUser(u12);
+    		} else {
+    		  String username = users.toString();
+    	}*/
         	
         	shops.setUser(u);
       	 }
@@ -142,11 +156,11 @@ public class Outletserviceimpl implements Outletservice{
 	@Transactional
 	public Outlet update(Outletdto user) {
 
-		Optional<Outlet> shop=this.orepo.findById(user.getId());
+		Optional<Outlet> shop=orepo.findById(user.getId());
 		if(shop.isPresent()) {
 			Outlet o=shop.get();
 			o.setOutletname(user.getOutletname());
-			
+			o.setOcode(user.getOcode());
 			orepo.save(o);
 			return o;
 		}
@@ -176,7 +190,7 @@ Optional<Outlet> shops=this.orepo.findById(id);
 Optional<Outlet> shops=this.orepo.findById(id);
 		
 		if(shops.isPresent()) {
-			
+		
 			return shops.get();
 		}
 		else {
@@ -206,8 +220,8 @@ Optional<Outlet> shops=this.orepo.findById(id);
 		System.out.println(q);
 		p1.setUser(p.getUser());
 		System.out.println(p.getUser()+"user");
-		p1.setOutlets(p.getOutlets());
-		System.out.println(p.getOutlets()+"shops");
+	/*	p1.setOutlets(p.getOutlets());
+		System.out.println(p.getOutlets()+"shops");*/
 		
 		
 		

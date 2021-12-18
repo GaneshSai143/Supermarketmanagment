@@ -13,8 +13,8 @@ import com.example.demo.entity.Products;
 @Repository
 public interface Productrepository extends JpaRepository<Products, Integer> {
 
-	@Query(value = "SELECT * FROM Products p where p.product_name IN (:products) ", nativeQuery = true)
-    List<Products> find(@Param("products") List<String> products);
+	@Query(value = "SELECT * FROM Products p where p.pcode IN (:pcode) ", nativeQuery = true)
+    List<Products> find(@Param("pcode") List<Integer> pcode);
 	
 	@Query(value=
 			"select p.* from products p join order_products op on op.product_id=p.id \r\n"

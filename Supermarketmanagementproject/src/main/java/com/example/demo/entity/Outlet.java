@@ -2,7 +2,7 @@ package com.example.demo.entity;
 
 import java.util.*;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,9 +38,26 @@ public class Outlet {
 	@NotNull(message="please provide outletname")
 	private String outletname;
 	
+	@NotNull(message="please provide code")
+	@Column(name="ocode", unique = true)
+	private int ocode;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Outlet_products", 
+		joinColumns = @JoinColumn(name = "user_outlet_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+	@OrderBy
+	@NotNull(message="please valid outletname")
+	@JsonIgnore
+	private Collection<Products> products ;
  
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
 	@JsonIgnore
 	private User user;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn
+	@JsonIgnore
+	private User cuser;
 }

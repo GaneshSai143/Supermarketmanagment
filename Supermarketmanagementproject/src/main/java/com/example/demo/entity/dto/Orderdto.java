@@ -23,11 +23,11 @@ public class Orderdto {
 	private String order_canceled;
 	private String customerdeliveryaddress;
 	private String orderstatus;
-	private List<String> productname;
+	private List<Integer> pcode;
 	private int quantity;
-	private List<String> outletname;
+	private List<Integer> ocode;
 	
-	private List<String> outletnames;
+	//private List<String> outletnames;
 	private int productquantity;
 	private String username;
 	

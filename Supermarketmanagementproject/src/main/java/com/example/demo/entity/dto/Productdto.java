@@ -19,9 +19,10 @@ public class Productdto {
 	private String pname;
 	 private int quantity;
 	 private long price; 
+	 private int pcode;
 	 private String  username;
      private int orderquantity;
-     private List<String> outletname;
+     //private List<String> outletname;
      
      
      

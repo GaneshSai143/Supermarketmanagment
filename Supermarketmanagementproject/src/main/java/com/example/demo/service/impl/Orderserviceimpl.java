@@ -64,15 +64,18 @@ public class Orderserviceimpl implements Orderservice {
 		o1.setQuantity(orders.getQuantity());
 		
 		
-		List<Products> products= prepo.find(orders.getProductname());
+		List<Products> products= prepo.find(orders.getPcode());
 		
     	o1.setProducts(products);
     	
     	
-    	List<Outlet> outlets= orepo.find(orders.getOutletname());
+    	List<Outlet> outlets= orepo.find(orders.getOcode());
     
     	o1.setOutlets(outlets);
     	
+    	User u1 = urepo.findByUsername(orders.getUsername());
+		o1.setUser(u1);
+ /*   	
 User u= null;
 		
 		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -83,7 +86,7 @@ User u= null;
 		  o1.setUser(u);
 		} else {
 		  String username = users.toString();
-	}
+	}*/
     	
     	
 		
@@ -104,7 +107,7 @@ User u= null;
 		p1.setPrice(p.getPrice());
 		p1.setQuantity(q);
 		p1.setUser(p.getUser());
-		p1.setOutlets(p.getOutlets());
+	//	p1.setOutlets(p.getOutlets());
 		prepo.save(p1);
 		
 		String email=orderrepo.finduserEmail(id);
