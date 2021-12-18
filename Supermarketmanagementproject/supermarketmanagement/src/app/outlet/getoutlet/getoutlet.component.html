@@ -6,18 +6,20 @@
             
             <th>outlet Id</th>
             <th>shopName</th>
+            <th>code</th>
             <th>Actions</th>
         </thead>
         <tbody>
             <tr *ngFor="let outlet  of outlets">
                   <td> {{outlet.id}}</td>
                   <td>{{outlet.outletname}}</td>
+                  <td>{{outlet.ocode}}</td>
                 <td>
                     <button (click)= "updateoutlet(outlet.id)" class="btn btn-info"> Update </button>
                 </td>
                 <td>
                     <button (click)= "deleteoutlet(outlet.id)" class="btn btn-danger" 
-                    style="margin-left: 10px;"> Delete
+                    style="margin-left: 5px;"> Delete
                     </button>
                     </td>
                     <td>

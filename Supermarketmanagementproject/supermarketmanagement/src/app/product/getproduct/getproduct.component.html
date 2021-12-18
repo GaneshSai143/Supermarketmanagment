@@ -1,0 +1,35 @@
+<p>getproduct works!</p>
+<div class="col-md-0 offset-md-0">
+    <h2>outlet List</h2>
+    <table class="table table-striped">
+        <thead>
+            <th>productname</th>
+            <th>pcode</th>
+            <th>price</th>
+            <th>quantity</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product  of products">
+                  <td> {{product.pname}}</td>
+                  <td>{{product.pcode}}</td>
+                  <td>{{product.quantity}}</td>
+                  <td>{{product.price}}</td>
+                <td>
+                    <button (click)= "updateproduct(product.id)" class="btn btn-info"> Update </button>
+                </td>
+                <td>
+                    <button (click)= "deleteproduct(product.id)" class="btn btn-danger" 
+                    style="margin-left: 5px;"> Delete
+                    </button>
+                    </td>
+                    <td>
+                    <button (click)= "productDetails(product.id)" class="btn btn-info" 
+                    style="margin-left: 5px;" > View
+                    </button>
+                    </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    </div>

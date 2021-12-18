@@ -1,0 +1,34 @@
+<p>createproduct works!</p>
+<div class="col-md-6 offset-md-3">
+    <h2>Create outletuser</h2>
+    <form (ngSubmit)="onSubmit()" >
+        <div class="form-group">
+            <label>product Name</label>
+            <input type="text" class="form-control" id="pname" name="pname"
+            [(ngModel)]="product.pname">
+        </div>
+        <div class="form-group">
+            <label>pcode</label>
+            <input type="number" class="form-control" id="pcode" name="pcode"
+            [(ngModel)]="product.pcode">
+        </div>
+        <div class="form-group">
+            <label>quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity"
+            [(ngModel)]="product.quantity">
+        </div>
+        <div class="form-group">
+            <label>price</label>
+            <input type="number" class="form-control" id="price" name="price"
+            [(ngModel)]="product.price">
+        </div>
+        <div class="form-group">
+            <label>username</label>
+            <input type="text" class="form-control" id="username" name="username"
+            [(ngModel)]="product.username">
+        </div>
+    
+            <button class="btn btn-success" type="submit">submit</button>
+        
+    </form>
+    </div>

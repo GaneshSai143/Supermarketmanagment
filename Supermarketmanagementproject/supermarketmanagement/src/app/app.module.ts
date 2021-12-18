@@ -6,8 +6,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { UserModule } from './model/user/user.module';
 import { OutletModule } from './outlet/outlet.module';
-import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
+
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { UserModule } from './user/user.module';
     HttpClientModule,
     FormsModule,
     UserModule,
-    OutletModule
+    OutletModule,
+    ProductModule
 
   ],
   providers: [],
