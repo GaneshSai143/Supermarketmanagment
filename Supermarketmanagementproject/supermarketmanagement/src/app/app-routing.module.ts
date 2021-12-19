@@ -17,7 +17,12 @@ const routes: Routes = [
         path:'',redirectTo:'product/getproduct',pathMatch:'full'},
         {
           path:'product',loadChildren:()=>import ('./product/product.module').then(mod=>mod.ProductModule)
-        }
+        },
+        {
+          path:'',redirectTo:'order/getorder',pathMatch:'full'},
+          {
+            path:'order',loadChildren:()=>import ('./order/order.module').then(mod=>mod.OrderModule)
+          }
   
 ];
 

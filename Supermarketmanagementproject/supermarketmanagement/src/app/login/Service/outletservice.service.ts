@@ -17,7 +17,7 @@ export class OutletserviceService {
       return this.httpClient.get<Outlet[]> (`${this.baseURL2}`);
     }
   
-    createuseroutlet(outlet:Outlet,user:User):Observable<any>{
+    createuseroutlet(outlet:Outlet):Observable<any>{
       return this.httpClient.post(`${this.baseURL2}`,outlet);
     }
   

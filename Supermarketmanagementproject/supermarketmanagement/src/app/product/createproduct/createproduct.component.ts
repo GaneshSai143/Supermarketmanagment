@@ -10,8 +10,6 @@ import { ProductserviceService } from '../productservice.service';
 })
 export class CreateproductComponent implements OnInit {
   product:Product=new Product();
-  
-  
     constructor(private productservice:ProductserviceService,private router:Router,private route: ActivatedRoute) { }
   
     ngOnInit(): void {

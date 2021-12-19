@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserModule } from './model/user/user.module';
+import { OrderModule } from './order/order.module';
 import { OutletModule } from './outlet/outlet.module';
 import { ProductModule } from './product/product.module';
 
@@ -25,7 +26,8 @@ import { ProductModule } from './product/product.module';
     FormsModule,
     UserModule,
     OutletModule,
-    ProductModule
+    ProductModule,
+    OrderModule
 
   ],
   providers: [],

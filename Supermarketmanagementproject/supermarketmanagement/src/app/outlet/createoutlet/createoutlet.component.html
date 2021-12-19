@@ -53,12 +53,11 @@
             <label>productcode</label>
             <input type="text" class="form-control" id="pcode" name="pcode"
             [(ngModel)]="outlet.pcode">
-            <div class="input-group-btn">   
-                <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>  
+            <div *ngFor="let product of (pcode | async)">
+                {{ product.pcode }}
               </div>
-            </div>
         
-    
+            </div>
             <button class="btn btn-success" type="submit">submit</button>
         
     </form>

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { OutletserviceService } from 'src/app/login/Service/outletservice.service';
 import { Outlet } from 'src/app/model/outlet';
-import { User } from 'src/app/model/user';
+import { Product } from 'src/app/model/product';
+import { ProductserviceService } from 'src/app/product/productservice.service';
+
 
 @Component({
   selector: 'app-createoutlet',
@@ -11,15 +14,18 @@ import { User } from 'src/app/model/user';
 })
 export class CreateoutletComponent implements OnInit {
 outlet:Outlet=new Outlet();
-user:User=new User();
+pcode: Observable<Product[]>|any;
 
-  constructor(private outletservice:OutletserviceService,private router:Router,private route: ActivatedRoute) { }
+  constructor(private outletservice:OutletserviceService,
+    private pservice:ProductserviceService,
+    private router:Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
   private saveoutlet(){
-    this.outletservice.createuseroutlet(this.outlet,this.user).subscribe (data => {
+    this.outletservice.createuseroutlet(this.outlet).subscribe (data => {
       console.log(data);
+      this.pcode = this.pservice.getproductList;
       this.goTooutletList();
     },
     error => console.log(error)
