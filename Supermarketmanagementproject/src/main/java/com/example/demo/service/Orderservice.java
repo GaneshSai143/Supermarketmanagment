@@ -12,7 +12,7 @@ import com.example.demo.entity.dto.Orderdto;
 public interface Orderservice {
 
 	
-	public List<Orders> getorders(int id);
+	public List<Orders> getorders();
 	public Orders bookingorder(Orderdto orders);
 	
 	public int productandorderquantity(int id)throws Exception;
@@ -20,4 +20,5 @@ public interface Orderservice {
 	public Orders update(Orderdto user);
 	
 	public void delete(int id);
+	Orders getOrderById(int id);
 }

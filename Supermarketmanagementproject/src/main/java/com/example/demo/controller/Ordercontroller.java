@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Orders;
+import com.example.demo.entity.Outlet;
 import com.example.demo.entity.Products;
 import com.example.demo.entity.dto.Orderdto;
 import com.example.demo.entity.dto.Productdto;
 import com.example.demo.service.impl.Orderserviceimpl;
 import com.example.demo.service.impl.Productserviceimpl;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/orders")
 public class Ordercontroller {
@@ -31,12 +34,15 @@ public class Ordercontroller {
 	@Autowired
 	private Orderserviceimpl oservice;
 	
-	@Autowired
-	private Productserviceimpl pservice;
 	
-	@GetMapping(value="/order/{id}")
-	public int getquantities(@Valid @RequestBody Orderdto orders, @PathVariable int id) throws Exception{
-		 return this.oservice.productandorderquantity(id);
+	@GetMapping(value="/orders")
+    public List<Orders> getAll() {
+        return oservice.getorders();
+    }
+	
+	@GetMapping(value="/orders/{id}")
+	public Orders getquantities(@Valid @RequestBody Orderdto orders, @PathVariable int id) throws Exception{
+		 return this.oservice.getOrderById(id);
 	}
 	
 	@PostMapping("/orders")
@@ -51,7 +57,6 @@ public class Ordercontroller {
 	@PutMapping(value="/orders/{id}")
 	public Orders updatethequanity(@Valid @RequestBody Orderdto orders ,@PathVariable int id) {
 		orders.setId(id);
-		System.out.println(id+"controller id");
 		return oservice.update(orders);
 	
 		}

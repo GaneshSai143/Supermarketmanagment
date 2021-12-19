@@ -43,7 +43,7 @@ public class Orderserviceimpl implements Orderservice {
 	
 	
 	@Override
-	public List<Orders> getorders(int id) {
+	public List<Orders> getorders() {
 
 		return orderrepo.findAll();
 	}
@@ -105,6 +105,7 @@ User u= null;
 		p1.setId(p.getId());
 		p1.setPname(p.getPname());
 		p1.setPrice(p.getPrice());
+		p1.setPcode(p.getPcode());
 		p1.setQuantity(q);
 		p1.setUser(p.getUser());
 	//	p1.setOutlets(p.getOutlets());
@@ -121,6 +122,22 @@ User u= null;
 		return q;
 	
 	}
+	
+	@Override
+	public Orders getOrderById(int id) {
+
+Optional<Orders> shops=this.orderrepo.findById(id);
+		
+		if(shops.isPresent()) {
+		
+			return shops.get();
+		}
+		else {
+			throw new ResourceNotFoundException("Record not found with id  :" +id);
+		}
+		
+	}
+	
 
 
 
