@@ -74,6 +74,7 @@ public class Productserviceimpl implements Productservice {
 			p.setPname(user.getPname());
 			p.setPrice(user.getPrice());
 			p.setQuantity(user.getQuantity());
+			p.setPcode(user.getPcode());
 			
 			
 			prepo.save(p);

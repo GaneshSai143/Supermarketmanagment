@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateoutletComponent } from './createoutlet/createoutlet.component';
 import { GetoutletComponent } from './getoutlet/getoutlet.component';
 import { GetoutletbyidComponent } from './getoutletbyid/getoutletbyid.component';
+import { ProductsendemailComponent } from './productsendemail/productsendemail.component';
 import { UpdateoutletComponent } from './updateoutlet/updateoutlet.component';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path:'createoutlet',component:CreateoutletComponent},
   {path:'updateoutlet/:id',  component:UpdateoutletComponent},
   {path: 'getoutletbyid/:id', component: GetoutletbyidComponent},
+  {path: 'productsendemail/:id', component:ProductsendemailComponent},
   {path:'',redirectTo:'outlet',pathMatch:'full'}
 ];
 

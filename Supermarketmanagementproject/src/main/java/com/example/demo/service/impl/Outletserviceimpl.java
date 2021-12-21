@@ -60,6 +60,7 @@ public class Outletserviceimpl implements Outletservice{
 	}
 
 	@Override
+	@Transactional
 	public Outlet create(Outletdto user) throws Exception  {
 		
 		Outlet shops=new Outlet();

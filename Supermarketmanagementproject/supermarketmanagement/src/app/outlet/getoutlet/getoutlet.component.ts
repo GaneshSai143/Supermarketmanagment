@@ -32,4 +32,7 @@ outlets:Outlet[]=[];
   outletDetails(id:number){
     this.router.navigate(['getoutletbyid',id]);
   }
+  productsendemail(id:number){
+    this.router.navigate(['productsendemail',id]);
+  }
 }

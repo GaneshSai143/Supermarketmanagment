@@ -13,8 +13,8 @@
             <tr *ngFor="let product  of products">
                   <td> {{product.pname}}</td>
                   <td>{{product.pcode}}</td>
-                  <td>{{product.quantity}}</td>
                   <td>{{product.price}}</td>
+                  <td>{{product.quantity}}</td>
                 <td>
                     <button (click)= "updateproduct(product.id)" class="btn btn-info"> Update </button>
                 </td>

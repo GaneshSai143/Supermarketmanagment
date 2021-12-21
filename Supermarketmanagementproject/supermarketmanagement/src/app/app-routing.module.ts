@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthguardService } from './authguard.service';
+import { LoginComponent } from './login/login.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { SecureComponent } from './secure/secure.component';
 
 const routes: Routes = [
 
@@ -22,7 +26,12 @@ const routes: Routes = [
           path:'',redirectTo:'order/getorder',pathMatch:'full'},
           {
             path:'order',loadChildren:()=>import ('./order/order.module').then(mod=>mod.OrderModule)
-          }
+          },
+
+          {path:'login',component:LoginComponent},
+          {path:'secure',canActivate:[AuthguardService], component:SecureComponent},
+          {path :'404',component:NotfoundComponent},
+          { path: '**', redirectTo: '404' }
   
 ];
 

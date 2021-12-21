@@ -41,7 +41,7 @@ public class Ordercontroller {
     }
 	
 	@GetMapping(value="/orders/{id}")
-	public Orders getquantities(@Valid @RequestBody Orderdto orders, @PathVariable int id) throws Exception{
+	public Orders getquantities(@Valid @PathVariable int id) throws Exception{
 		 return this.oservice.getOrderById(id);
 	}
 	

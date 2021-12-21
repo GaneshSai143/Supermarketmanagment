@@ -7,6 +7,7 @@ import { UpdateoutletComponent } from './updateoutlet/updateoutlet.component';
 import { GetoutletbyidComponent } from './getoutletbyid/getoutletbyid.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductsendemailComponent } from './productsendemail/productsendemail.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
     GetoutletComponent,
     CreateoutletComponent,
     UpdateoutletComponent,
-    GetoutletbyidComponent
+    GetoutletbyidComponent,
+    ProductsendemailComponent
   ],
   imports: [
     CommonModule,

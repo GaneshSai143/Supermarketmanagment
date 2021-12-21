@@ -10,6 +10,7 @@ import { User } from 'src/app/model/user';
 export class OutletserviceService {
   private baseURL1 ='http://localhost:8091/outlets/outlet';
   private baseURL2 ='http://localhost:8091/outlets/outlets';
+  private baseURL3 ='http://localhost:8091/outlets/sendemail';
   
     constructor(private httpClient:HttpClient) { }
   
@@ -31,5 +32,8 @@ export class OutletserviceService {
   
     deleteoutlet(id:number):Observable<object>{
       return this.httpClient.delete(`${this.baseURL1}/${id}`);
+    }
+    productsendemail(id:number):Observable<Outlet>{
+      return this.httpClient.get<Outlet>(`${this.baseURL3}/${id}`);
     }
 }

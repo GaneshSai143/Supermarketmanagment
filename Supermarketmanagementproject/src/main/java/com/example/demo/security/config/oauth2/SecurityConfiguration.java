@@ -47,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	
-    	http.csrf().disable().authorizeRequests().antMatchers("/api/get").permitAll()
+    	http.csrf().disable().authorizeRequests().antMatchers("/oauth/token").permitAll()
     	.antMatchers("/customerregister").permitAll()
-    	.antMatchers("/outlets","/products").permitAll()//hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	.antMatchers("/outlets","/products").hasAnyAuthority("ROLE_SUPER_ADMIN")
     	.antMatchers("/products/products","/orders/productqupdate/{id}","/outlets","/user").permitAll()//.hasAnyAuthority("ROLE_OUTLET_ADMIN")
     	.antMatchers("/orders","/user").permitAll()//.hasAnyAuthority("ROLE_CUSTOMER")
     	.anyRequest()
