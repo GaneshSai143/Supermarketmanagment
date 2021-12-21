@@ -14,7 +14,8 @@ import { ProductserviceService } from 'src/app/product/productservice.service';
 })
 export class CreateoutletComponent implements OnInit {
 outlet:Outlet=new Outlet();
-pcode: Observable<Product[]>|any;
+private pcode: number[] = new Array<number>();
+//pcode: Observable<Product[]>|any;
 
   constructor(private outletservice:OutletserviceService,
     private pservice:ProductserviceService,
@@ -25,7 +26,7 @@ pcode: Observable<Product[]>|any;
   private saveoutlet(){
     this.outletservice.createuseroutlet(this.outlet).subscribe (data => {
       console.log(data);
-      this.pcode = this.pservice.getproductList;
+      this.outlet.push(this.pcode);
       this.goTooutletList();
     },
     error => console.log(error)
