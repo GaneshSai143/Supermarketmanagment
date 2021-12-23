@@ -44,9 +44,9 @@ public class Productserviceimpl implements Productservice {
 		p.setPrice(user.getPrice());
 		p.setPcode(user.getPcode());
 		
-		User u1 = urepo.findByUsername(user.getUsername());
-		p.setUser(u1);
-	/*	User u= null;
+		/*User u1 = urepo.findByUsername(user.getUsername());
+		p.setUser(u1);*/
+		User u= null;
 		
 		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

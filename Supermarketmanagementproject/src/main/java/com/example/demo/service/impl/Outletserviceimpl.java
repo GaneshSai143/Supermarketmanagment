@@ -85,14 +85,19 @@ public class Outletserviceimpl implements Outletservice{
         
        
         User u=null;
-        
+User u1= null;
+		
+		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (users1 instanceof UserDetails) {
+		  String username = ((UserDetails)users1).getUsername();
+		  u1=this.urepo.findByUsername(username);
+		  shops.setCuser(u1);
+		} else {
+		  String username = users1.toString();
+	}
         
         List<Authority> allList=rrepo.findAll();
-        /*String RoleSuper=allList.get(0).getName();
-        List<String> SuperAdminList=new ArrayList<String>();
-        SuperAdminList.add(RoleSuper);
-        
-        List<Authority> addAuthorities=rrepo.find(users.getRoletype());*/
         
         Authority addList=rrepo.find(users.getRoletype().toUpperCase());
        for(int i=0;i<allList.size();i++)
@@ -121,23 +126,15 @@ public class Outletserviceimpl implements Outletservice{
         
         	List<Products> products= prepo.find(user.getPcode());
         	shops.setProducts(products);
-        	User u1 = urepo.findByUsername(user.getOusername());
-    		shops.setCuser(u1);
-    	/*	User u12= null;
+        	//User u1 = urepo.findByUsername(user.getOusername());
+    		//shops.setCuser(u1);
     		
-    		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-    		if (users instanceof UserDetails) {
-    		  String username = ((UserDetails)users1).getUsername();
-    		  u=this.urepo.findByUsername(username);
-    		  shops.setUser(u12);
-    		} else {
-    		  String username = users.toString();
-    	}*/
         	
         	shops.setUser(u);
+        	System.out.println(u);
       	 }
        }
+       
         
   Email mail = new Email();
   mail.setSubject("Welcome to Super market Management System Program");

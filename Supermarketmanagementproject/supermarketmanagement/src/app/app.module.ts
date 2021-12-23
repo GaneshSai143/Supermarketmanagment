@@ -18,9 +18,11 @@ import { UserModule } from './model/user/user.module';
 import { OrderModule } from './order/order.module';
 import { OutletModule } from './outlet/outlet.module';
 import { ProductModule } from './product/product.module';
-import { SecureComponent } from './secure/secure.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { LogoutComponent } from './logout/logout.component';
+import { SucesComponent } from './suces/suces.component';
+
 
 
 
@@ -28,8 +30,9 @@ import { NotfoundComponent } from './notfound/notfound.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    SecureComponent,
     NotfoundComponent,
+    LogoutComponent,
+    SucesComponent
     
   ],
   imports: [

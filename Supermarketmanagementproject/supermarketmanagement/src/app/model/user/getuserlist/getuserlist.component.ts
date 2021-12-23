@@ -16,6 +16,7 @@ export class GetuserlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.getusers();
+   // this.createuser();
   }
   private getusers(){
     this.userservice.getusersList().subscribe(data => {this.users=data;});
@@ -34,6 +35,9 @@ export class GetuserlistComponent implements OnInit {
   userDetails(id:number){
     this.router.navigate(['getuserbyid',id]);
   }
+ // createuser(){
+ //   this.router.navigate(['user/createuser']);
+ // }
 
 
 }

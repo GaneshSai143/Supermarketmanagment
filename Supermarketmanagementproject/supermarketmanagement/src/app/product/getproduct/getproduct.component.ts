@@ -14,13 +14,14 @@ export class GetproductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getproducts();
+    this.createproduct();
   }
   private getproducts(){
     this.productservice.getproductList().subscribe(data => {this.products=data;});
   }
 
   updateproduct(id:number){
-    this.router.navigate(['updateproduct',id]);
+    this.router.navigate(['product/updateproduct',id]);
   }
   deleteproduct(id:number){
     this.productservice.deleteproduct(id).subscribe(data =>{
@@ -30,6 +31,9 @@ export class GetproductComponent implements OnInit {
   }
 
   productDetails(id:number){
-    this.router.navigate(['getproductbyid',id]);
+    this.router.navigate(['product/getproductbyid',id]);
+  }
+  createproduct(){
+    this.router.navigate(['product/createproduct'])
   }
 }

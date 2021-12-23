@@ -14,13 +14,14 @@ outlets:Outlet[]=[];
 
   ngOnInit(): void {
     this.getoutlets();
+   // this.createoutlet();
   }
   private getoutlets(){
     this.outletservice.getoutletList().subscribe(data => {this.outlets=data;});
   }
 
   updateoutlet(id:number){
-    this.router.navigate(['updateoutlet',id]);
+    this.router.navigate(['outlet/updateoutlet',id]);
   }
   deleteoutlet(id:number){
     this.outletservice.deleteoutlet(id).subscribe(data =>{
@@ -30,9 +31,12 @@ outlets:Outlet[]=[];
   }
 
   outletDetails(id:number){
-    this.router.navigate(['getoutletbyid',id]);
+    this.router.navigate(['outlet/getoutletbyid',id]);
   }
   productsendemail(id:number){
-    this.router.navigate(['productsendemail',id]);
+    this.router.navigate(['outlet/productsendemail',id]);
   }
+ /* createoutlet(){
+    this.router.navigate(['outlet/createoutlet']);
+  }*/
 }

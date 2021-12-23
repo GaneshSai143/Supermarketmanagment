@@ -14,13 +14,14 @@ export class GetorderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getorders();
+    this.createorder();
   }
   private getorders(){
     this.oservice.getorderList().subscribe(data => {this.orders=data;});
   }
 
   updateorder(id:number){
-    this.router.navigate(['updateorder',id]);
+    this.router.navigate(['order/updateorder',id]);
   }
   deleteorder(id:number){
     this.oservice.deleteproduct(id).subscribe(data =>{
@@ -30,10 +31,12 @@ export class GetorderComponent implements OnInit {
   }
 
   orderDetails(id:number){
-    this.router.navigate(['getorderbyid',id]);
+    this.router.navigate(['order/getorderbyid',id]);
   }
   productupdatesendemail(id:number){
-    this.router.navigate(['updateproductsendmail',id]);
+    this.router.navigate(['order/updateproductsendmail',id]);
   }
-
+createorder(){
+  this.router.navigate(['order/createorder']);
+}
 }

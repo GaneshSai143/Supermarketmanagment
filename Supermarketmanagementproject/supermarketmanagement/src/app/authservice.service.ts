@@ -7,7 +7,7 @@ import { TokenService } from './token.service';
 
 const OAUTH_CLIENT = 'client-1';
 const OAUTH_SECRET = 'admin';
-const API_URL = 'http://localhost:8091/';
+const API_URL = 'http://localhost:8091';
 const HTTP_OPTIONS = {
   headers: new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -39,21 +39,24 @@ export class AuthserviceService {
   constructor(private http: HttpClient, private tokenService: TokenService) {
   }
 
-  login(loginData: any): Observable<any> {
-    const body = new HttpParams()
-      .set('username', loginData.username)
-      .set('password', loginData.password)
-      .set('grant_type', 'password');
-
-    return this.http.post<any>(API_URL + 'oauth/token', body, HTTP_OPTIONS)
-      .pipe(
-        tap(res => {
-          this.tokenService.saveToken(res.access_token);
-          this.tokenService.saveRefreshToken(res.refresh_token);
-        }),
-        catchError(AuthserviceService.handleError)
-      );
-  }
+  login(username:any, password:any): Observable<any>  {
+    localStorage.setItem('STATE','true')
+     var data = "grant_type=password"+ "&username=" + username + "&password=" + password ;
+    /* var reqHeader = new HttpHeaders({
+       'Content-Type': 'application/x-www-form-urlencoded',
+       Authorization: 'Basic ' + btoa(OAUTH_CLIENT + ':' + OAUTH_SECRET)
+     })*/
+   
+     return this.http.post<any>(API_URL + '/oauth/token', data, HTTP_OPTIONS )
+     .pipe(
+       tap(res => {
+         this.tokenService.saveToken(res.access_token);
+         this.tokenService.saveRefreshToken(res.refresh_token);
+       }),
+       catchError(AuthserviceService.handleError)
+     );
+ 
+   }
 
   refreshToken(refreshData: any): Observable<any> {
     this.tokenService.removeToken();
@@ -61,7 +64,7 @@ export class AuthserviceService {
     const body = new HttpParams()
       .set('refresh_token', refreshData.refresh_token)
       .set('grant_type', 'refresh_token');
-    return this.http.post<any>(API_URL + 'oauth/token', body, HTTP_OPTIONS)
+    return this.http.post<any>(API_URL + '/oauth/token', body, HTTP_OPTIONS)
       .pipe(
         tap(res => {
           this.tokenService.saveToken(res.access_token);
@@ -77,8 +80,8 @@ export class AuthserviceService {
   }
 
 
-  secure(): Observable<any> {
-    return this.http.get<any>(API_URL + 'outlets')
+  suces(): Observable<any> {
+    return this.http.get<any>(API_URL + 'suces')
       .pipe(catchError(AuthserviceService.handleError));
   }
 }

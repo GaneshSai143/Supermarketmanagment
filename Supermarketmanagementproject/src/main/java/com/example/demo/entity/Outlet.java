@@ -35,10 +35,10 @@ public class Outlet {
 	
 	private int id;
 	
-	@NotNull(message="please provide outletname")
+	//@NotNull(message="please provide outletname")
 	private String outletname;
 	
-	@NotNull(message="please provide code")
+	//@NotNull(message="please provide code")
 	@Column(name="ocode", unique = true)
 	private int ocode;
 	

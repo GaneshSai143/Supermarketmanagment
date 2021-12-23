@@ -34,10 +34,10 @@ export class LoginComponent implements OnInit {
 
   onFormSubmit(): void {
     this.isLoadingResults = true;
-    this.authService.login(this.loginForm.value)
+    this.authService.login(this.loginForm.value.username,this.loginForm.value.password)
       .subscribe(() => {
         this.isLoadingResults = false;
-        this.router.navigate(['outlet']).then(_ => console.log('You are secure now!'));
+        this.router.navigate(['/suces']).then(_ => console.log('You are secure now!'));
       }, (err: any) => {
         console.log(err);
         this.isLoadingResults = false;

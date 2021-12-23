@@ -28,9 +28,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-    	http.csrf().disable().authorizeRequests().antMatchers("/oauth/token").permitAll()
-    	.antMatchers("/customerregister","user/**").permitAll()
-    	.antMatchers("/user").hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	http.csrf().disable().authorizeRequests().antMatchers("/api/get","/customerregister").permitAll()
+    	//.antMatchers("/customerregister").permitAll()
+    	.antMatchers("/outlets","/products","/user").hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	.antMatchers("/products/products","/orders/productqupdate/{id}","/outlets","/user").hasAnyAuthority("ROLE_OUTLET_ADMIN")
+    	.antMatchers("/orders","/user").hasAnyAuthority("ROLE_CUSTOMER")
     	.anyRequest()
     	.authenticated().and().formLogin().disable();
                 
