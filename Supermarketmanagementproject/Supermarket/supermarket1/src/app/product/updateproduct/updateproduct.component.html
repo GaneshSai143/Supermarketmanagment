@@ -1,0 +1,33 @@
+<h3>update the product details</h3>
+<div *ngIf="update"
+class="alert alert-success" (click)="clear()">✖
+  <strong>Success! </strong>
+</div>
+<div class="col-md-6 offset-md-3">
+    <h2>Udate user</h2>
+    <form (ngSubmit)="onSubmit()" >
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" class="form-control" id="pname" name="pname"
+            [(ngModel)]="product.pname">
+        </div>
+        <div class="form-group">
+            <label>Product Price</label>
+            <input type="number" class="form-control" id="price" name="price"
+            [(ngModel)]="product.price">
+        </div>
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity"
+            [(ngModel)]="product.quantity">
+        </div>
+            <button class="btn btn-success" type="submit">submit</button>
+        
+    </form>
+    </div>
+
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+        <p style="color: white">Please Wait. </p>  
+        </ngx-spinner>
+
+        <button (click)="goback()">Back</button>

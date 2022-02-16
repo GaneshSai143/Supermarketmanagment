@@ -1,0 +1,134 @@
+<div *ngIf="createForm"
+class="alert alert-success" (click)="clear()">✖
+  <strong>Success! </strong>
+</div>
+<div *ngIf="danger"
+class="alert alert-danger" (click)="clear()">✖
+  <strong>not added! </strong>
+</div>
+<div class="col-md-4 offset-md-3">
+    <h2>Create order</h2>
+    <form  #Registerform="ngForm" (ngSubmit)="onSubmit()" >
+        <div class="form-group">
+            <label for="name">Order name*</label>
+            <input type="text" class="form-control" id="order_name" name="order_name"
+            [(ngModel)]="orders.order_name" required #name="ngModel" 
+             [class.is-invalid]="name.invalid && name.touched">
+             <div *ngIf="name.errors &&  (name.invalid && name.touched)">
+                <small class="text-danger" *ngIf="name.errors?.['required']">order name field is required</small>
+                </div>  
+            
+        </div>
+        <div class="form-group">
+            <label for="order_delivered">Order delivered*</label>
+            <input type="text" class="form-control" id="order_delivered" name="order_delivered"
+            [(ngModel)]="orders.order_delivered" required #order_delivered="ngModel"
+             [class.is-invalid]="order_delivered.invalid && order_delivered.touched" (click)="clear()">
+             <div *ngIf="order_delivered.errors &&  (order_delivered.invalid && order_delivered.touched)">
+                <small class="text-danger" *ngIf="order_delivered.errors?.['required']">delivered field is required</small>
+                </div> 
+
+        </div>
+        <!--<div class="form-group">
+            <label> Created User Name</label>
+            <input type="text" class="form-control" id="cusername" name="cusername"
+            [(ngModel)]="companyDto.cusername">
+        </div>
+        <div class="form-group">
+            <label>Company Address</label>
+            <input type="text" class="form-control" id="address" name="address"
+            [(ngModel)]="companyDto.address">
+        </div>
+        <div class="form-group">
+            <label>Product codes</label>
+            <input type="text" class="form-control" id="discription" name="discription"
+            [(ngModel)]="companyDto.discription">
+        </div>-->
+        
+        <div class="form-group">
+            <label for="order_canceled">order_canceled*</label>
+            <input type="text" class="form-control" id="order_canceled" name="order_canceled"
+            [(ngModel)]="orders.order_canceled" required #order_canceled="ngModel">
+            <div *ngIf="order_canceled.errors &&  (order_canceled.invalid && order_canceled.touched)">
+                <small class="text-danger" *ngIf="order_canceled.errors?.['required']">order_canceled field is required</small>
+                </div>
+        </div>
+
+       
+    
+        <div class="form-group">
+            <label for="customerdeliveryaddress">customer address*</label>
+            <input type="text" class="form-control" id="customerdeliveryaddress" name="customerdeliveryaddress"
+            [(ngModel)]="orders.customerdeliveryaddress" #customerdeliveryaddress="ngModel" required [class.is-invalid]="customerdeliveryaddress.invalid && customerdeliveryaddress.touched"/>
+            <div *ngIf="customerdeliveryaddress.errors &&  (customerdeliveryaddress.invalid && customerdeliveryaddress.touched)">
+            <small class="text-danger" *ngIf="customerdeliveryaddress.errors?.['required']">Customerdeliveryaddress field is required</small>
+            </div>
+        </div>
+        <div class="from-group">
+            <label for="orderstatus"> Orderstatus* :</label>
+            <input type="text" class="form-control" id="orderstatus" name="orderstatus" 
+           [(ngModel)]="orders.orderstatus" 
+            #orderstatus="ngModel" required [class.is-invalid]="orderstatus.invalid && orderstatus.touched"/>
+            <div *ngIf="orderstatus.errors &&  (orderstatus.invalid && orderstatus.touched)">
+                <small class="text-danger" *ngIf="orderstatus.errors?.['required']">order status field is required</small>
+                </div>
+        <!-- <div *ngIf="emailduplicate" class="text-danger">Duplicate email</div> -->
+        </div>
+      <!--  <div *ngFor="let user of users">
+            <div *ngIf="!user.emailId"     class="text-danger">Duplicate email</div>
+        </div>-->
+  
+         
+        <div class="form-group">
+              <label for="quantity">quantity*</label>
+             <div>
+              <input type="number" id="quantity" name="quantity" [(ngModel)]="orders.quantity" class="form-control" 
+              required #quantity="ngModel" [class.is-invalid]="quantity.invalid && quantity.touched"/>
+                
+                <div *ngIf="quantity.errors &&  (quantity.invalid && quantity.touched)">
+                    <small class="text-danger" *ngIf="quantity.errors?.['required']">Quantity field is required</small>
+                    <!-- <small class="text-danger" *ngIf="email.errors?.['pattern']">Enter valid email id</small> -->
+                 </div>
+             </div>
+         </div>
+
+         
+
+        
+        <div class="form-group" >
+            <label for="outletCode">Outlet Code</label>
+            <li *ngFor="let item of outletdata">
+                <input type="checkbox" [(ngModel)]="item.isselected" (click)="onChange1()" name="item.outletname"
+                [value]="item.ocode" >{{item.outletname}}
+               
+              </li>
+            <div *ngIf="isok1" class="text-danger">please check at least one</div>
+        
+
+      </div>
+
+      <div class="form-group" >
+        <label for="productCode">Product Code</label>
+            <li *ngFor="let item of productData">
+                <input type="checkbox" [(ngModel)]="item.isselected" (click)="onChange()" name="item.pname"
+                [value]="item.pcode" >{{item.pname}}
+               
+              </li>
+        <div *ngIf="isok" class="text-danger">please check at least one</div>
+    
+
+  </div>
+
+
+          <div>
+            <button [disabled]="Registerform.form.invalid" type="submit" class="btn btn-info">Register</button>
+     
+    </div>
+</form>    
+</div>
+<button (click)="goback()">Back</button>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+  <p style="color: white">Please Wait. </p>  
+  </ngx-spinner>
+

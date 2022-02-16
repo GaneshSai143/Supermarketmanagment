@@ -1,0 +1,41 @@
+<h3> View Outlet Details</h3>
+<div>
+    <div>
+        <label> <b> Outlet Name: </b>
+        </label> {{outlet.outletname}}
+    </div>
+    <div>
+        <label> <b> code: </b>
+        </label> {{outlet.ocode}}
+    </div>
+    <p>outlet user detals</p>
+    <div>
+        <label> <b> username: </b>
+        </label> {{outlet.user.username}}
+    </div>
+    <div>
+        <label> <b> First Name: </b>
+        </label> {{outlet.user.firstName}}
+    </div>
+    <div>
+        <label> <b> Last Name: </b>
+        </label> {{outlet.user.lastName}}
+    </div>
+    <div>
+        <label> <b> Email Id: </b>
+        </label> {{outlet.user.emailId}}
+    </div>
+    <!-- <div>
+        <label> <b> password: </b>
+        </label> {{user.password}}
+    </div> -->
+<br>
+    <div>
+        <label><b>Role:</b>
+        </label>{{outlet.user.authorities[0].name}}
+    </div>
+    <br>
+  
+</div>
+<button (click)="goback()">Back</button>
+

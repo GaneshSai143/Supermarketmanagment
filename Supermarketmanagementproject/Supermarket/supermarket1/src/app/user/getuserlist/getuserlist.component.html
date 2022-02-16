@@ -1,0 +1,135 @@
+<!-- <div *ngIf="delete"
+class="alert alert-success" (click)="clear()">✖
+  <strong>Record deleted successfully </strong>
+</div>
+<div *ngIf="dele" class="alert alert-danger"  id="alert_container">
+    <strong>failed!</strong> Record deleted failed.
+    <button (click)="clear()">✖</button>
+  </div>
+<div class="col-md-0 offset-md-0">
+    <h2>Users List</h2>
+    <table class="table table-striped">
+        <thead>
+           
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Id</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user  of users">
+                  <td>{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>{{user.emailId}}</td>
+                   <td>{{user.authorities[0].name}}</td>
+                <td>
+                    <button (click)= "updateuser(user.id)" class="btn btn-info"> Update </button>
+                </td>
+                <td>
+                    <button (click)= "deleteuser(user.id)" class="btn btn-danger" 
+                    style="margin-left: 10px;"> Delete
+                    </button>
+                    </td>
+                    <td>
+                    <button (click)= "userDetails(user.id)" class="btn btn-info" 
+                    style="margin-left: 5px;" > View
+                    </button>
+                    </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <br>
+    <button (click)="goback()">Back</button> -->
+
+
+
+    <div class="example-header">
+  
+  
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+    
+    </div>  
+    
+    <div class="col-md-0 offset-md-0">
+      <mat-table class="table table-striped" [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <!-- <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container> -->
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="emailId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+          EmaiId
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.emailId}} </mat-cell>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            first Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.firstName}} </mat-cell>
+        </ng-container>
+    
+        <!-- Color Column -->
+      
+        <ng-container matColumnDef="lastName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+          last name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" >
+            {{row.lastName}}
+          </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="role">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Role
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" >
+            {{row.authorities[0].name}}
+          </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Actions
+          </mat-header-cell >
+          <mat-cell *matCellDef="let row">
+            <button (click)= "updateuser(row.id)" class="btn btn-info" style="margin-left: 5px;">
+              Update </button>
+    
+              <button (click)= "deleteuser(row.id)" class="btn btn-danger" 
+              style="margin-left: 5px;"> Delete
+              </button>
+    
+              <button (click)= "userDetails(row.id)" class="btn btn-info" 
+              style="margin-left: 5px;" > View
+              </button>
+    
+    
+          </mat-cell>
+        </ng-container>
+    
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"> </mat-row>
+      </mat-table>
+    
+      <mat-paginator 
+       [length]="5"
+       [pageSizeOptions]="[3, 5, 10,4 ]"
+       [showFirstLastButtons]="firstLastButtons"
+       (page)="onChangePage($event)">
+    </mat-paginator>
+    
+    </div>
+
+
+    <button (click)="goback()">Back</button>

@@ -1,0 +1,48 @@
+<!-- <button (click)= "createcompany()" class="btn btn-danger" 
+style="margin-left: 10px;"> Create Company
+</button> -->
+<div *ngIf="delete"
+class="alert alert-success" (click)="clear()">
+  <strong>Success! deleted </strong>✖
+</div>
+<div class="col-md-0 offset-md-0">
+    <h2>Outlet LIST</h2>
+    <table class="table table-striped">
+        <thead>
+        
+            <th>Outlet  Name</th>
+            <th>Outlet Code</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let outlets  of outlet">
+
+                  <td>{{outlets.outletname}}</td>
+                  <td>{{outlets.ocode}}</td>
+                  
+                <td>
+                    <button (click)= "updateoutlet(outlets.id)" class="btn btn-info"> Update </button>
+                </td>
+                <td>
+                    <button (click)= "deleteoutlet(outlets.id)" class="btn btn-danger" 
+                    style="margin-left: 10px;"> Delete
+                    </button>
+                    </td>
+                    <td>
+                    <button (click)= "OutletDetails(outlets.id)" class="btn btn-info" 
+                    style="margin-left: 10px;" > View
+                    </button>
+                    </td>
+                    <!-- <td>
+                        <button (click)= "sendemail(outlets.id)" class="btn btn-info" 
+                        style="margin-left: 10px;" > sendemail
+                        </button>
+                        </td> -->
+                
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <br>
+    <button (click)="goback()">Back</button>
+

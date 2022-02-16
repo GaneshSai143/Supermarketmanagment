@@ -1,0 +1,26 @@
+<div class="col-md-0 offset-md-0">
+    <h2>Product List</h2>
+    <table class="table table-striped">
+        <thead>
+           
+            <th>product Name</th>
+            <th>price</th>
+            <th>quantity</th>
+            <th>pcode</th>
+            
+        </thead>
+        <tbody>
+            <tr *ngFor="let products  of product">
+                  <td>{{products.pname}}</td>
+                  <td>{{products.price}}</td>
+                  <td>{{products.quantity}}</td>
+                  <td>{{products.pcode}}</td>
+                
+                
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <button (click)="goback()">Back</button>
+

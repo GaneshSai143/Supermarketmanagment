@@ -1,0 +1,54 @@
+<div *ngIf="update"
+class="alert alert-success" (click)="clear()">
+  <strong>Success! </strong>✖
+</div>
+<div *ngIf="danger"
+class="alert alert-danger" (click)="clear()">
+  <strong>not updated! </strong>✖
+</div>
+<div class="col-md-6 offset-md-3">
+    <h2>Udate order</h2>
+    <form (ngSubmit)="onSubmit()" >
+        <div class="form-group">
+            <label>order Name</label>
+            <input type="text" class="form-control" id="order_name" name="order_name"
+            [(ngModel)]="order.order_name">
+        </div>
+        <div class="form-group">
+            <label>order delivered</label>
+            <input type="text" class="form-control" id="order_delivered" name="order_delivered"
+            [(ngModel)]="order.order_delivered">
+        </div>
+        <div class="form-group">
+            <label>order address</label>
+            <input type="text" class="form-control" id=" customerdeliveryaddress" name=" customerdeliveryaddress"
+            [(ngModel)]="order. customerdeliveryaddress">
+        </div>
+        <div class="form-group">
+            <label>order canceled</label>
+            <input type="text" class="form-control" id="order_canceled" name="order_canceled"
+            [(ngModel)]="order.order_canceled">
+        </div>
+        <div class="form-group">
+            <label>order status</label>
+            <input type="text" class="form-control" id="orderstatus" name="orderstatus"
+            [(ngModel)]="order.orderstatus">
+        </div>
+        <div class="form-group">
+            <label>quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity"
+            [(ngModel)]="order.quantity">
+        </div>
+        
+        
+    
+            <button class="btn btn-success" type="submit">submit</button>
+        
+    </form>
+    </div>
+
+    <button (click)="goback()">Back</button>
+
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+        <p style="color: white">Please Wait. </p>  
+        </ngx-spinner>
