@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,25 +37,26 @@ public class Outlet {
 	
 	private int id;
 	
-	//@NotNull(message="please provide outletname")
+	@NotBlank(message="please provide outletname")
 	private String outletname;
-	
-	//@NotNull(message="please provide code")
+
+	@NotNull(message="please provide code")
 	@Column(name="ocode", unique = true)
-	private int ocode;
+	private Integer ocode;
+	
+	private boolean isselected=false;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "Outlet_products", 
 		joinColumns = @JoinColumn(name = "user_outlet_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
 	@OrderBy
-	@NotNull(message="please valid outletname")
-	@JsonIgnore
+	//@JsonIgnore
 	private Collection<Products> products ;
  
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn
-	@JsonIgnore
+	
 	private User user;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

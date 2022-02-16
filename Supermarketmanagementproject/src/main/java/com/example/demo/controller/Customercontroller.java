@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.demo.entity.Outlet;
+import com.example.demo.entity.Products;
 import com.example.demo.entity.User;
 
 import com.example.demo.entity.dto.Userdto;
@@ -25,7 +26,7 @@ import com.example.demo.service.impl.Customerserviceimpl;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/customer")
 public class Customercontroller {
 	
 	@Autowired
@@ -33,30 +34,28 @@ public class Customercontroller {
 	
 	
 
-		@GetMapping(value="/user")
+		@GetMapping
 	    public List<User> getAll() {
 	        return detailsServiceImpl.getAll();
 	    }
 		
-		@GetMapping(value="/user/{id}")
+		@GetMapping("/getproducts")
+	    public List<Products> getProducts() {
+	        return detailsServiceImpl.getAllproducts();
+	    }
+		
+		@GetMapping("/getoutlets")
+	    public List<Outlet> getOutlets() {
+	        return detailsServiceImpl.getAlloutlets();
+	    }
+		@GetMapping(value="/{id}")
 		public ResponseEntity<User> getUserById(@Valid @PathVariable int id) {
 			return ResponseEntity.ok().body(detailsServiceImpl.getUserById(id));
 		}
 		
-	/*	@RequestMapping(value="/user",method = RequestMethod.POST, produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-	    @ResponseStatus(value = HttpStatus.OK)
-	    public ResponseEntity<User> create(@Valid @RequestBody Userdto user) throws Exception {
-	        detailsServiceImpl.create(user);
-	        HttpHeaders headers = new HttpHeaders();
-	        
-	        return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();u
-	           
-		}*/
 		
 		
-		
-		
-		@PutMapping("/edit/{id}")
+		@PutMapping("/{id}")
 		public ResponseEntity<User> update(@Valid @RequestBody Userdto users,@PathVariable int id) {
 			users.setId(id);
 			
@@ -65,8 +64,8 @@ public class Customercontroller {
 			
 		
 		
-			@DeleteMapping("/delete/{id}")
-			public void deleteusers(@Valid @PathVariable ("id") int id) {
+			@DeleteMapping("/{id}")
+			public void deleteusers(@Valid @PathVariable int id) {
 				detailsServiceImpl.delete(id);
 			}
 		

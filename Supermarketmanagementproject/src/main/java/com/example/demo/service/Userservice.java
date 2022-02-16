@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.entity.Outlet;
+import com.example.demo.entity.Products;
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.Outletdto;
 import com.example.demo.entity.dto.Productdto;
@@ -16,6 +18,11 @@ public interface Userservice {
 	
 	 public void delete(int id);
 	User getUserById(int id);
+
+	List<Outlet> getAlloutlets();
+
+	List<Products> getAllproducts();
 	
+	User getUserByEmalId(String emailId);
 
 }

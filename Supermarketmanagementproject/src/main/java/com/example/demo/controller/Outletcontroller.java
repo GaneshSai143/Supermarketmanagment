@@ -33,18 +33,18 @@ public class Outletcontroller {
 	@Autowired
 	private Outletserviceimpl outletservice;
 	
-	@GetMapping(value="/outlets")
+	@GetMapping("/get")
     public List<Outlet> getAll() {
         return outletservice.getAll();
     }
 	
 	
-	@GetMapping(value="/outlet/{id}")
+	@GetMapping(value="/{id}")
 	public ResponseEntity<Outlet> getUserById(@Valid @PathVariable int id) {
 		return ResponseEntity.ok().body(this.outletservice.getOutletById(id));
 	}
 	
-	@PostMapping("/outlets")
+	@PostMapping
 	public ResponseEntity<Outlet> create(@Valid @RequestBody Outletdto user) throws Exception {
        outletservice.create(user);
         HttpHeaders headers = new HttpHeaders();
@@ -53,14 +53,14 @@ public class Outletcontroller {
            
 	}
 	
-	@PutMapping(value="/outlet/{id}")
+	@PutMapping(value="/{id}")
 	public ResponseEntity<Outlet> update(@Valid @RequestBody Outletdto user,@PathVariable int id) {
 		user.setId(id);
 		return ResponseEntity.ok().body(this.outletservice.update(user));
 		
 		}
 	
-	@DeleteMapping(value="outlet/{id}")
+	@DeleteMapping(value="/{id}")
 	 @ResponseStatus(value = HttpStatus.OK)
 	 public HttpStatus delete(@Valid @PathVariable int id) {
 			System.out.println("delete sucessfully");

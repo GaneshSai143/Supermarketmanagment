@@ -21,4 +21,6 @@ public interface Orderservice {
 	
 	public void delete(int id);
 	Orders getOrderById(int id);
+	List<Orders> getallorders();
+	List<Orders> getorder();
 }

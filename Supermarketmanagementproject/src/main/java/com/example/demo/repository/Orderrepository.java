@@ -21,4 +21,11 @@ public interface Orderrepository extends JpaRepository<Orders, Integer> {
 	
 	@Query(value = "select quantity from orders where id= :id" ,nativeQuery = true)
 	int findByQuantity(@Param("id") int id);
+	
+	@Query(value="select o.* from orders o join user_info u on o.user_id=u.id where u.user_name=:user",nativeQuery = true)
+	List<Orders> findorders(@Param("user")String user);
+	
+	@Query(value="select o.* from outlet oo join outlet_orders oop on oo.id=oop.outlet_id\r\n"
+			+ "join orders o on o.id=oop.order_id where oo.user_id=:id",nativeQuery = true)
+	List<Orders>findorder(@Param("id")int id);
 }

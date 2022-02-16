@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.dto.User1;
 import com.example.demo.entity.dto.Userdto;
 import com.example.demo.service.impl.Customerserviceimpl;
 import com.example.demo.service.impl.Customerserviceregisterserviceimpl;
@@ -28,7 +29,8 @@ public class Customerregistrationcontroller {
 	
 	@PostMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<User> create(@Valid @RequestBody Userdto user) throws Exception {
+    public ResponseEntity<User> create(@Valid @RequestBody User1 user)  {
+		System.out.println("there is an error");
         detailsServiceImpl.create(user);
         HttpHeaders headers = new HttpHeaders();
         

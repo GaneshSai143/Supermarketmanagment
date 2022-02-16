@@ -58,92 +58,110 @@ public class Outletserviceimpl implements Outletservice{
 		
 		return orepo.findAll();
 	}
+	
+	@Override
+	public Outlet getoutletname() {
+
+		Outlet u1= null;
+		//String user=null;
+		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      // List<Outlet> user=null;
+		if (users1 instanceof UserDetails) {
+		  String username = ((UserDetails)users1).getUsername();
+		 // u1=this.urepo.findByUsername(username);
+		  u1=orepo.findByoutletname(username);
+		} else {
+		  String username = users1.toString();
+	}
+		return u1;
+	}
 
 	@Override
 	@Transactional
 	public Outlet create(Outletdto user) throws Exception  {
-		
-		Outlet shops=new Outlet();
-		shops.setOutletname(user.getOutletname());
-		shops.setOcode(user.getOcode());
-		
-		
 		Userdto users= user.getUserdto();
-		
-		
-        User user1 = new User();
-      
-        user1.setFirstName(users.getFirstName());
-        user1.setLastName(users.getLastName());
-        user1.setUsername(users.getUsername());
-        user1.setEmailid(users.getEmailId());
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-        String pass=passwordGenerator.generateRandomPassword(8);
-        String encodedPassword = passwordEncoder.encode(pass);
-        System.out.println(pass);
-        user1.setPassword(encodedPassword);
-        
-       
-        User u=null;
-User u1= null;
-		
-		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		/*  User userWithDuplicateUsername = urepo.findByUsername(users.getUsername());
+		   	 if(userWithDuplicateUsername!=null && user.getId()!=userWithDuplicateUsername.getId()) {
+					 throw new ResourceNotFoundException("Duplicate user name :"+  users.getUsername());
+				}*/
+		    User userwithDuplicate =urepo.findByEmailId(users.getEmailId());
+			 if(userwithDuplicate!=null && user.getId()!=userwithDuplicate.getId()){
+				 throw new ResourceNotFoundException("Duplicate   mailId :"+  users.getEmailId());
+			 }
+			 Outlet outletwithcode=orepo.findByOcode(user.getOcode());
+			 if(outletwithcode!=null && user.getId()!=outletwithcode.getId()) {
+				 throw new ResourceNotFoundException("Duplicate shop code :"+ user.getOcode());
+			 }
+			 
+				Outlet shops=new Outlet();
+				shops.setOutletname(user.getOutletname());
+				shops.setOcode(user.getOcode());
+					shops.setIsselected(false);
+			
+		        User user1 = new User();
+		      
+		        user1.setFirstName(users.getFirstName());
+		        user1.setLastName(users.getLastName());
+		        user1.setUsername(users.getEmailId());
+		        user1.setEmailId(users.getEmailId());
+		        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+		        String pass=passwordGenerator.generateRandomPassword(8);
+		        String encodedPassword = passwordEncoder.encode(pass);
+		        System.out.println(pass);
+		        user1.setPassword(encodedPassword);
+		        
+		       
+		        User u=null;
+		User u1= null;
+				
+				Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		if (users1 instanceof UserDetails) {
-		  String username = ((UserDetails)users1).getUsername();
-		  u1=this.urepo.findByUsername(username);
-		  shops.setCuser(u1);
-		} else {
-		  String username = users1.toString();
-	}
-        
-        List<Authority> allList=rrepo.findAll();
-        
-        Authority addList=rrepo.find(users.getRoletype().toUpperCase());
-       for(int i=0;i<allList.size();i++)
-       { 
-      	 
-      	if(users.getRoletype().equalsIgnoreCase(allList.get(i).getAuthority()))
-      	 {
-      		 System.out.println("if manin "+users.getRoletype());
-      		
-      		 if(users.getRoletype().equalsIgnoreCase(allList.get(0).getAuthority()))
-      			{
-      			
-      			 System.out.println(allList.get(i).getAuthority()+"inner if");
-      			 throw new ResourceNotFoundException("u cant add");
-      		 }
-      		 
-      		 else if(allList.get(0).getAuthority()!=users.getRoletype()&&users.getRoletype().equals(allList.get(1).getAuthority())){
-      			
-          		 user1.setAuthorities(List.of(addList));
-          		u= urepo.save(user1);
-        }
-        
-      		 else {
-      			throw new ResourceNotFoundException("u cant add");
-      		 }
-        
-        	List<Products> products= prepo.find(user.getPcode());
-        	shops.setProducts(products);
-        	//User u1 = urepo.findByUsername(user.getOusername());
-    		//shops.setCuser(u1);
-    		
-        	
-        	shops.setUser(u);
-        	System.out.println(u);
-      	 }
-       }
-       
-        
-  Email mail = new Email();
-  mail.setSubject("Welcome to Super market Management System Program");
-  mail.setToEmail(user1.getEmailid());
-  mail.setContent("You were added by "+users.getRoletype()+"\n" +"Username :"+users.getUsername() +"\n"+ "password :"+pass);
-  emailservice.sendEmail(mail);
+				if (users1 instanceof UserDetails) {
+				  String username = ((UserDetails)users1).getUsername();
+				  u1=this.urepo.findByUsername(username);
+				  shops.setCuser(u1);
+				} else {
+				  String username = users1.toString();
+			}
+		        
+		        List<Authority> allList=rrepo.findAll();
+		        
+		        Authority addList=rrepo.find(users.getRoletype().toUpperCase());
+		      
+		      	 
+		      	if(allList.get(1).getAuthority().equalsIgnoreCase(users.getRoletype()))
+		      	 {
 
-		return orepo.save(shops);
-	}
+		          		 user1.setAuthorities(List.of(addList));
+		          		u= urepo.save(user1);
+		        }
+		        
+		      		 else {
+		      			throw new ResourceNotFoundException("u cant add");
+		      		 }
+
+		       
+		       List<Products> products= prepo.find(user.getPcode());
+		       if(products.isEmpty()&&products.equals(user.getPcode()))
+		       {
+		    	   throw new ResourceNotFoundException("please valid products to assign the shop");
+		       }
+		       else {
+				shops.setProducts(products);
+		       }
+       	shops.setUser(u);
+       	System.out.println(u);
+		        
+		  Email mail = new Email();
+		  mail.setSubject("Welcome to Super market Management System Program");
+		  mail.setToEmail(user1.getEmailId());
+		  mail.setContent("You were added by "+users.getRoletype()+"\n" +"Username :"+users.getEmailId() +"\n"+ "password :"+pass);
+		  emailservice.sendEmail(mail);
+
+				return orepo.save(shops);
+  }
+
+	
        
 	
        
@@ -159,6 +177,7 @@ User u1= null;
 			Outlet o=shop.get();
 			o.setOutletname(user.getOutletname());
 			o.setOcode(user.getOcode());
+			o.setIsselected(false);
 			orepo.save(o);
 			return o;
 		}
@@ -198,6 +217,24 @@ Optional<Outlet> shops=this.orepo.findById(id);
 	}
 	
 	
+//	@Override
+//	public Products getProductById(int id) {
+//
+//List<Products> shops=prepo.findByproducts(id);
+////		
+////		if(shops.isPresent()) {
+////		
+////			return shops.get();
+////		}
+////		else {
+////			throw new ResourceNotFoundException("Record not found with id  :" +id);
+////		}
+//		
+//		return shops.get();
+//		
+//	}
+	
+	
 
 	@Override
 	@Transactional
@@ -220,15 +257,16 @@ Optional<Outlet> shops=this.orepo.findById(id);
 		System.out.println(p.getUser()+"user");
 	/*	p1.setOutlets(p.getOutlets());
 		System.out.println(p.getOutlets()+"shops");*/
+		System.out.println(q+"quantity");
 		
 		
-		
-		if(q<=0)
+		if(q==0)
 		{
 			Email mail = new Email();
 			  mail.setSubject("Welcome to Super market Management System Program");
 			  mail.setToEmail(email);
-			  mail.setContent("products was null"+shopname+" in this shop please add the products");
+			  mail.setContent("products was null in my outlet="+shopname+"\n"+"the Quauntity="+q+"\n"+" in this shop please add the product quantity"
+					  +"\n"+"That product name is="+p.getPname());
 			  emailservice.sendEmail(mail);
 			
 		}

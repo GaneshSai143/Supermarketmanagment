@@ -8,13 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
-@XmlRootElement(name = "error")
+//@XmlRootElement(name = "error")
 @Data
 @AllArgsConstructor
 public class Violation {
 
-	//private String fieldname;
+	private String fieldname;
 	//private String error;
 	private String message;
-	private List<String> details;
+	//private List<String> details;
+	public Violation(String message) {
+		super();
+		this.message = message;
+		//this.error = error;
+	}
 }

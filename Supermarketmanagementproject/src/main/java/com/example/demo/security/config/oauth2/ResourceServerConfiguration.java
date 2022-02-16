@@ -2,16 +2,13 @@ package com.example.demo.security.config.oauth2;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 
 @Configuration
 @EnableResourceServer
-
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 	
 
@@ -28,14 +25,15 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-    	http.csrf().disable().authorizeRequests().antMatchers("/api/get","/customerregister").permitAll()
-    	//.antMatchers("/customerregister").permitAll()
-    	.antMatchers("/outlets","/products","/user").hasAnyAuthority("ROLE_SUPER_ADMIN")
-    	.antMatchers("/products/products","/orders/productqupdate/{id}","/outlets","/user").hasAnyAuthority("ROLE_OUTLET_ADMIN")
-    	.antMatchers("/orders","/user").hasAnyAuthority("ROLE_CUSTOMER")
+    	http.csrf().disable().authorizeRequests().antMatchers("/oauth/token","/customerregister").permitAll()
+    	.antMatchers("/users","/outlets/**","/products/**").hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	.antMatchers("/shops").hasAnyAuthority("ROLE_OUTLET_ADMIN")
+    	.antMatchers("/orders","/customer").hasAnyAuthority("ROLE_CUSTOMER")	
     	.anyRequest()
-    	.authenticated().and().formLogin().disable();
-                
+    	.authenticated()
+    	.and().formLogin().disable();
     }
-    }
+
+
+}
 

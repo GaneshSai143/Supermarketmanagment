@@ -1,42 +1,30 @@
 package com.example.demo.entity.dto;
 
-
-
-
-import java.util.*;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import com.example.demo.controller.Emailvalid;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
 
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-@ToString
-
-public class Userdto {
-
-
+public class User1 {
+	
 	private int id;
 	@NotEmpty( message = "firstname name should have")
     private String firstName;
 	@NotEmpty( message = "last name should have ")
     private String lastName;
-	//@NotEmpty(message = "password should have")
+	
     private String username;
+    @NotBlank(message = "password should have")
     private String password;
 	
 	@NotBlank(message="the email was required")
@@ -46,6 +34,5 @@ public class Userdto {
 	//@NotEmpty(message="role was not empty")
 	//@NotNull
     private String roletype;
-   
-    
+
 }

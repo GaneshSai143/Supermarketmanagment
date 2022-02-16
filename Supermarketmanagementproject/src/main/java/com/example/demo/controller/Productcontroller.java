@@ -30,35 +30,34 @@ public class Productcontroller {
 	@Autowired
 	private Productserviceimpl pservice;
 	
-	@GetMapping("/products")
+	@GetMapping("/get")
 	public List<Products> getallproducts()
 	{
 		return pservice.getAll();
 	}
 	
-	@PostMapping("/product")
-	public ResponseEntity<Products> saveproducts(@Valid @RequestBody Productdto user){
-		
-		
+	@PostMapping
+	public ResponseEntity<Productdto> saveproducts(@Valid @RequestBody Productdto user){
+
 		 pservice.create(user);
 		 HttpHeaders headers = new HttpHeaders();
-		return new ResponseEntity<>(headers, HttpStatus.FOUND).ok().build();
+		return new ResponseEntity<Products>(headers, HttpStatus.FOUND).ok().build();
 	}
 	
-	@GetMapping(value="/product/{id}")
+	@GetMapping(value="/{id}")
 	public ResponseEntity<Products> getUserById(@Valid @PathVariable int id) {
 		return ResponseEntity.ok().body(pservice.getProductById(id));
 	}
 	
-	@PutMapping(value="/products/{id}")
+	@PutMapping(value="/{id}")
 	public ResponseEntity<Products> update(@Valid @RequestBody Productdto items,@PathVariable int id) {
 		items.setId(id);
 		return ResponseEntity.ok().body(this.pservice.update(items));
 		
 		}
 	
-	@DeleteMapping("/productdelete/{id}")
-	public void deleteproducts(@Valid @PathVariable ("id") int id) {
+	@DeleteMapping("/{id}")
+	public void deleteproducts(@Valid @PathVariable int id) {
 		pservice.delete(id);
 	}
 

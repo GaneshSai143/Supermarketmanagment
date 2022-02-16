@@ -16,4 +16,6 @@ public interface Productservice {
 		
 		 public void delete(int id);
 		 Products getProductById(int id);
+		List<Products> getproducts();
+		
 }

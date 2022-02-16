@@ -1,18 +1,21 @@
-package com.example.demo.controller;
+package com.example.demo.exception;
 
 import java.util.*;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+
 public class ApiError {
 
-    private HttpStatus status;
+	private HttpStatus status;
     private String message;
     private List<String> errors;
 
@@ -29,6 +32,5 @@ public class ApiError {
         this.message = message;
         errors = Arrays.asList(error);
     }
-
 	
 }

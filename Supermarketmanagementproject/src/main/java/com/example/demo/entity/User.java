@@ -35,7 +35,7 @@ import lombok.var;
 
 
 @Entity
-@Table(name = "user_info", uniqueConstraints = { @UniqueConstraint(columnNames = { "user_name","email" }) })
+@Table(name = "user_info", uniqueConstraints = { @UniqueConstraint(columnNames = { "user_name" }) })
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
@@ -62,7 +62,7 @@ public class User implements UserDetails, Serializable {
 	@Column(name="password")
 	private String password;
 	
-	//@NotEmpty
+	@NotEmpty
 	//@NotNull(message="the firstname was required")
 	@Column(name="first_name")
 	private String firstName;
@@ -74,15 +74,15 @@ public class User implements UserDetails, Serializable {
 	//@Emailvalid
 	//@NotEmpty
 	//@NotNull(message="the email was required")
-	@Column(name="email",unique = true)
-	private String emailid;
+	@Column(name="email")
+	private String emailId;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_authority", 
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
 	@OrderBy
-	@JsonIgnore
+	
 	private List<Authority> authorities ;
 
 	

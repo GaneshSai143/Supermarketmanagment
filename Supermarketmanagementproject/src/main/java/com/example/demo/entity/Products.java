@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,19 +40,21 @@ public class Products {
 	
  private int id;
  @Column(name="product_name")
- 
- @NotNull(message="please provide productname")
+
+@NotBlank(message="please provide productname")
  private String pname;
  @NotNull(message="please provide quantity")
- private int quantity;
- @NotNull(message="please provide price")
- private long price;
- @NotNull(message="please enter code")
+
+ private Integer quantity;
+@NotNull(message="please provide price")
+
+ private Long price;
+@NotNull(message="please provide productcode")
+
  @Column(name="pcode", unique = true)
- private int pcode;
+ private Integer pcode;
  
- 
- 
+private boolean isselected =false;
  
  @ManyToOne(fetch = FetchType.LAZY)
  @JoinColumn

@@ -48,6 +48,43 @@ public class Orderserviceimpl implements Orderservice {
 		return orderrepo.findAll();
 	}
 	
+	@Override
+	public List<Orders> getallorders() {
+		//Orders u1= null;
+		//String user=null;
+		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       List<Orders> user=null;
+		if (users1 instanceof UserDetails) {
+		  String username = ((UserDetails)users1).getUsername();
+		 // u1=this.urepo.findByUsername(username);
+		  user=orderrepo.findorders(username);
+		} else {
+		  String username = users1.toString();
+	}
+		return user;
+	}
+	
+	@Override
+	public List<Orders> getorder() {
+
+		
+		Outlet u1=null;
+		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	       List<Orders> user=null;
+			if (users1 instanceof UserDetails) {
+			  String username = ((UserDetails)users1).getUsername();
+			 // u1=this.urepo.findByUsername(username);
+			 
+			  u1=orepo.findByoutletname(username);
+			  user=orderrepo.findorder(u1.getId());
+			
+			  
+			} else {
+			  String username = users1.toString();
+		}
+			return user;
+	}
+	
 	
 
 	@Override
@@ -63,19 +100,23 @@ public class Orderserviceimpl implements Orderservice {
 		
 		o1.setQuantity(orders.getQuantity());
 		
+		List<Outlet> ocode=orepo.find(orders.getOcode());
+		List<Outlet> outlets= orepo.find(orders.getOcode());
+	    System.out.println(orepo.find(orders.getOcode())+"outlet");
+    	o1.setOutlets(outlets);
 		
-		List<Products> products= prepo.find(orders.getPcode());
-		
+		List<Products> products= prepo.findp(ocode);
+		System.out.println(prepo.findp(ocode)+"products");
     	o1.setProducts(products);
     	
     	
-    	List<Outlet> outlets= orepo.find(orders.getOcode());
-    
-    	o1.setOutlets(outlets);
+//    	List<Outlet> outlets= orepo.find(orders.getOcode());
+//    
+//    	o1.setOutlets(outlets);
     	
-    	User u1 = urepo.findByUsername(orders.getUsername());
-		o1.setUser(u1);
- /*   	
+    	/*User u1 = urepo.findByUsername(orders.getUsername());
+		o1.setUser(u1);*/
+   	
 User u= null;
 		
 		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -86,7 +127,7 @@ User u= null;
 		  o1.setUser(u);
 		} else {
 		  String username = users.toString();
-	}*/
+	}
     	
     	
 		
@@ -112,6 +153,7 @@ User u= null;
 		prepo.save(p1);
 		
 		String email=orderrepo.finduserEmail(id);
+		System.out.println(email+"mail");
 		
 		Email mail = new Email();
 		  mail.setSubject("Welcome to Super market Management System Program");

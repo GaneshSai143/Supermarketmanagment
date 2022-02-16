@@ -28,4 +28,16 @@ public interface Outletrepository extends JpaRepository<Outlet, Integer> {
 	
 	@Query(value ="select outletname from outlet where id=:id" ,nativeQuery = true)
 	String findOutletname(@Param("id") int id);
+
+	public Outlet findByOcode(int ocode);
+	
+	@Query(value="select * from user_info u join  outlet o on u.id=o.user_id where u.user_name=:user",nativeQuery = true)		
+    Outlet findByoutletname(@Param("user") String user);
+	
+	@Query(value="select * from user_info u join  outlet o on u.id=o.user_id join\r\n"
+			+ "outlet_products op on op.user_outlet_id=o.id where u.user_name=:user" , nativeQuery = true)
+	Outlet findoutlets(@Param("user")String user);
+	
+	
+	
 }

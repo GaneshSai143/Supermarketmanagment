@@ -3,7 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import com.example.demo.entity.Outlet;
-
+import com.example.demo.entity.Products;
 import com.example.demo.entity.dto.Outletdto;
 
 
@@ -18,4 +18,6 @@ public interface Outletservice {
 		public String Emailsend(int id)throws Exception;
 		 public void delete(int id);
 		 Outlet getOutletById(int id);
+		Outlet getoutletname();
+		//Products getProductById(int id);
 }

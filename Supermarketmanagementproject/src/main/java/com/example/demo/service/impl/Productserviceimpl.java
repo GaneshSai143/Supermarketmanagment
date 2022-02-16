@@ -34,33 +34,59 @@ public class Productserviceimpl implements Productservice {
 		return prepo.findAll();
 	}
 
+	
+	@Override
+	public List<Products> getproducts() {
+
+		
+		Outlet u1=null;
+		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	       List<Products> user=null;
+			if (users1 instanceof UserDetails) {
+			  String username = ((UserDetails)users1).getUsername();
+			 // u1=this.urepo.findByUsername(username);
+			  u1=orepo.findByoutletname(username);
+			  user=prepo.findByproducts(u1.getId());
+			 
+			  
+			} else {
+			  String username = users1.toString();
+		}
+			return user;
+	}
+	
 	@Override
 	@Transactional 
 	public Products create(Productdto user) {
 
-		Products p=new Products();
-		p.setPname(user.getPname());
-		p.setQuantity(user.getQuantity());
-		p.setPrice(user.getPrice());
-		p.setPcode(user.getPcode());
 		
-		/*User u1 = urepo.findByUsername(user.getUsername());
-		p.setUser(u1);*/
-		User u= null;
-		
-		Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Products productWithDuplicatecode = prepo.findByPcode(user.getPcode());
+	   	 if(productWithDuplicatecode!=null && user.getId()!=productWithDuplicatecode.getId()) {
+				 throw new ResourceNotFoundException("Duplicate product code :"+  user.getPcode());
+			}
 
-		if (users instanceof UserDetails) {
-		  String username = ((UserDetails)users).getUsername();
-		  u=this.urepo.findByUsername(username);
-		  p.setUser(u);
-		} else {
-		  String username = users.toString();
-	}
-		/*List<Outlet> outlets= orepo.find(user.getOutletname());
-    	p.setOutlets(outlets);*/
-    	
-		return prepo.save(p);
+			Products p=new Products();
+		
+				p.setPname(user.getPname());
+				p.setQuantity(user.getQuantity());
+				p.setPrice(user.getPrice());
+				p.setPcode(user.getPcode());
+			p.setIsselected(false);
+			User u= null;
+			
+			Object users = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+			if (users instanceof UserDetails) {
+			  String username = ((UserDetails)users).getUsername();
+			  u=this.urepo.findByUsername(username);
+			  p.setUser(u);
+			} else {
+			  String username = users.toString();
+}
+
+			return prepo.save(p);
+		
+		//return p1;
 	}
 	
 
@@ -75,7 +101,7 @@ public class Productserviceimpl implements Productservice {
 			p.setPrice(user.getPrice());
 			p.setQuantity(user.getQuantity());
 			p.setPcode(user.getPcode());
-			
+			p.setIsselected(false);
 			
 			prepo.save(p);
 			return p;

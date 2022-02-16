@@ -15,10 +15,7 @@ public class SupermarketmanagementprojectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SupermarketmanagementprojectApplication.class, args);
 		
-		
- 
-        
-        
+		      
 	}
 
 }

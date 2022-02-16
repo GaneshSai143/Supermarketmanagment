@@ -35,18 +35,20 @@ public class Ordercontroller {
 	private Orderserviceimpl oservice;
 	
 	
-	@GetMapping(value="/orders")
-    public List<Orders> getAll() {
-        return oservice.getorders();
-    }
+	@GetMapping
+	public List<Orders> getorders()
+	{
+		return oservice.getallorders();
+	}
 	
-	@GetMapping(value="/orders/{id}")
+	@GetMapping(value="/{id}")
 	public Orders getquantities(@Valid @PathVariable int id) throws Exception{
 		 return this.oservice.getOrderById(id);
 	}
 	
-	@PostMapping("/orders")
+	@PostMapping
 	public ResponseEntity<Orders> create(@Valid @RequestBody Orderdto orders) throws Exception {
+	
        oservice.bookingorder(orders);
         HttpHeaders headers = new HttpHeaders();
         
@@ -54,7 +56,7 @@ public class Ordercontroller {
            
 	}
 	
-	@PutMapping(value="/orders/{id}")
+	@PutMapping(value="/{id}")
 	public Orders updatethequanity(@Valid @RequestBody Orderdto orders ,@PathVariable int id) {
 		orders.setId(id);
 		return oservice.update(orders);
@@ -66,8 +68,8 @@ public class Ordercontroller {
 		return oservice.productandorderquantity(id);
 	}
 	
-	@DeleteMapping("/orderdelete/{id}")
-	public void deleteproducts(@Valid @PathVariable ("id") int id) {
+	@DeleteMapping("/{id}")
+	public void deleteproducts(@Valid @PathVariable int id) {
 		oservice.delete(id);
 	}
 

@@ -2,6 +2,9 @@ package com.example.demo.entity.dto;
 
 import java.util.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -18,15 +21,13 @@ public class Outletdto {
 	
 
 	private int id;
-	@NotNull(message="please provide outletname")
+	@NotBlank(message="please provide outletname")
 	private String outletname;
-	@NotNull(message="please provide outletname")
-	private int ocode;
-	@NotNull
+	@NotNull(message="please provide outletcode")
+	private Integer ocode;
+	@Valid
 	private Userdto userdto;
-	@NotNull
 	 private List<Integer> pcode;
-	@NotNull
 	 private int quantity;
 	 private String ousername;
 	 

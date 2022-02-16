@@ -7,20 +7,27 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.Authority;
+import com.example.demo.entity.Outlet;
 import com.example.demo.entity.PasswordGenerator;
+import com.example.demo.entity.Products;
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.Userdto;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mail.Email;
 import com.example.demo.mail.Emailserviceimpl;
+import com.example.demo.repository.Outletrepository;
+import com.example.demo.repository.Productrepository;
 import com.example.demo.repository.Role;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.Productservice;
 import com.example.demo.service.Userservice;
 
 
@@ -40,12 +47,44 @@ public class Customerserviceimpl implements Userservice {
 	@Autowired
 	private Role rrepo;
 	
+	@Autowired
+	private Outletrepository orepo;
+	
+	@Autowired
+	private Productrepository prepo;
+	
+	@Autowired
+	private UserRepository urepo;
+	
 	
 	@Transactional(readOnly = true)
 	@Override
 	 public List<User> getAll() {
-		 return userRepository.findAll();
+		//User u1= null;
+		//String user=null;
+		Object users1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       List<User> u1=null;
+		if (users1 instanceof UserDetails) {
+		  String username = ((UserDetails)users1).getUsername();
+		 // u1=this.urepo.findByUsername(username);
+		  u1=urepo.findcustomer(username);
+		} else {
+		  String username = users1.toString();
+	}
+		return u1;
 	 }
+	
+	@Override
+	public List<Products> getAllproducts() {
+
+		return prepo.findAll();
+	}
+	
+	@Override
+	public List<Outlet> getAlloutlets() {
+
+		return orepo.findAll();
+	}
 
 	/*@Override
 	@Transactional
@@ -116,8 +155,20 @@ Optional<User> userdb=this.userRepository.findById(user.getId());
 			userUpdate.setUsername(user.getUsername());
 			userUpdate.setFirstName(user.getFirstName());
 			userUpdate.setLastName(user.getLastName());
-			userUpdate.setEmailid(user.getEmailId());
-		    userUpdate.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
+			userUpdate.setEmailId(user.getEmailId());
+		    //userUpdate.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
+			if(user.getPassword()==null)
+			{
+				
+				
+				userUpdate.setPassword(userdb.get().getPassword());
+			}
+			else {
+				
+			
+				userUpdate.setPassword(new BCryptPasswordEncoder(8).encode(user.getPassword()));
+			}
+		   // userUpdate.setAuthorities(user.ge);
 		    userRepository.save(userUpdate);
 		    return userUpdate;
 		}
@@ -153,6 +204,12 @@ Optional<User> userdb=this.userRepository.findById(id);
 			throw  new ResourceNotFoundException("Record not found with id  :" +id);
 		}
 		
+	}
+
+	@Override
+	public User getUserByEmalId(String emailId) {
+		
+		return userRepository.findByEmailId(emailId);
 	}
 
 

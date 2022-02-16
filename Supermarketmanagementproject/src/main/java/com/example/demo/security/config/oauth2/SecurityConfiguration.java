@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,18 +44,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	http.csrf().disable().authorizeRequests().antMatchers("/oauth/token","/customerregister").permitAll()
+    	.antMatchers("/users","/outlets/**","/products/**").hasAnyAuthority("ROLE_SUPER_ADMIN")
+    	.antMatchers("/shops").hasAnyAuthority("ROLE_OUTLET_ADMIN")
+    	.antMatchers("/orders","/customer").hasAnyAuthority("ROLE_CUSTOMER")
     	
     	
-    	http.csrf().disable().authorizeRequests().antMatchers("/api/get","/customerregister").permitAll()
-       // .antMatchers("/customerregister").permitAll()
-    	.antMatchers("/outlets","/products","/user").hasAnyAuthority("ROLE_SUPER_ADMIN")
-    	.antMatchers("/products/products","/orders/productqupdate/{id}","/outlets","/user").hasAnyAuthority("ROLE_OUTLET_ADMIN")
-    	.antMatchers("/orders","/user").hasAnyAuthority("ROLE_CUSTOMER")
     	.anyRequest()
-    	.authenticated().and().formLogin().disable();
+    	.authenticated()
+    	.and().formLogin().disable();
        
     }
-    
-   
-    
+
 }

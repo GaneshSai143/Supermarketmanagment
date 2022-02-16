@@ -3,12 +3,22 @@ package com.example.demo.error;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Validationerrorresponse {
 
-	private List<String>list =new ArrayList<String>();
+	private List<Violation>violationlist =new ArrayList<Violation>();
 }
